@@ -1,8 +1,8 @@
 package presentation;
 
-import metier.Bibliotheque;
-import metier.Livre;
-import metier.Magazine;
+import metier.Documents.Bibliotheque;
+import metier.Documents.Livre;
+import metier.Documents.Magazine;
 import utilitaire.DateUtils;
 import utilitaire.Validation;
 

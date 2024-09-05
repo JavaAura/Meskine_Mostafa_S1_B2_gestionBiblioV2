@@ -1,8 +1,8 @@
-package metier;
+package metier.Documents;
 
 import java.util.ArrayList;
 
-public class Magazine extends Document{
+public class Magazine extends Document {
     private int numero;
     private static ArrayList<Magazine> magazines = new ArrayList<Magazine>();
 

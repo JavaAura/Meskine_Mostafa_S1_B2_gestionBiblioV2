@@ -1,15 +1,17 @@
-package metier;
+package metier.Documents;
 
 public class Livre extends Document {
     private int ISBN;
 
-    public void emprunter(){
+    public void emprunter() {
 
     }
-    public void retourner(){
+
+    public void retourner() {
 
     }
-    public void afficherDetails(){
+
+    public void afficherDetails() {
 
     }
 
@@ -25,7 +27,7 @@ public class Livre extends Document {
     @Override
     public String toString() {
         return "Livre{" +
-                "ISBN=" + ISBN + super.toString()+
-                "} " ;
+                "ISBN=" + ISBN + super.toString() +
+                "} ";
     }
 }

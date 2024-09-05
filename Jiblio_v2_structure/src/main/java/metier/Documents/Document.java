@@ -1,4 +1,4 @@
-package metier;
+package metier.Documents;
 
 import java.util.UUID;
 
