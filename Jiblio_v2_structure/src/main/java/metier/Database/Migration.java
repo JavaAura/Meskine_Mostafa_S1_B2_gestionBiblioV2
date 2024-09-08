@@ -6,10 +6,10 @@ import java.sql.Statement;
 public class Migration {
 //    Connection conn = DbConnection.getInstance();
 
-    public static void createDocumentTable(Connection conn){
+    public static void createDocumentsTable(Connection conn){
         Statement statement;
         try {
-            String query = "CREATE TABLE Documents ("
+            String query = "CREATE TABLE documents ("
                     + "ID SERIAL PRIMARY KEY, "
                     + "titre VARCHAR(50) NOT NULL, "
                     + "auteur VARCHAR(50) NOT NULL, "
@@ -19,7 +19,99 @@ public class Migration {
                     + "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
             statement = conn.createStatement();
             statement.execute(query);
-            System.out.println("table created successfully!");
+            System.out.println("documents table created successfully!");
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    public static void createLivresTable(Connection conn){
+        Statement statement;
+        try {
+            String query = "CREATE TABLE livres ("
+                    + "ISBN INT) INHERITS (documents)";
+            statement = conn.createStatement();
+            statement.execute(query);
+            System.out.println("livres table created successfully!");
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    public static void createMagazinesTable(Connection conn){
+        Statement statement;
+        try {
+            String query = "CREATE TABLE magazines ("
+                    + "numero INT) INHERITS (documents)";
+            statement = conn.createStatement();
+            statement.execute(query);
+            System.out.println("magazines table created successfully!");
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    public static void createJournalTable(Connection conn){
+        Statement statement;
+        try {
+            String query = "CREATE TABLE journalScientifiques ("
+                    + "domaineRecherche VARCHAR(200) NOT NULL) INHERITS (documents)";
+            statement = conn.createStatement();
+            statement.execute(query);
+            System.out.println("JournalScientifiques table created successfully!");
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    public static void createTheseUniversitaireTable(Connection conn){
+        Statement statement;
+        try {
+            String query = "CREATE TABLE thesesUniversitaire ("
+                    + "universite VARCHAR(100) NOT NULL, "
+                    + "domaine VARCHAR(100) NOT NULL ) INHERITS (documents)";
+            statement = conn.createStatement();
+            statement.execute(query);
+            System.out.println("ThesesUniversitaire table created successfully!");
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    public static void createutilisateursTable(Connection conn){
+        Statement statement;
+        try {
+            String query1 = "CREATE TYPE role AS ENUM ('etudiant', 'professeur');";
+            String query2 = "CREATE TABLE utilisateurs ("
+                    + "ID SERIAL PRIMARY KEY, "
+                    + "email VARCHAR(250) UNIQUE NOT NULL, "
+                    + "password VARCHAR(250) NOT NULL, "
+                    + "user_role role, "
+                    + "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
+            statement = conn.createStatement();
+            statement.addBatch(query1);
+            statement.addBatch(query2);
+            statement.executeBatch();
+            System.out.println("users table created successfully!");
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    public static void createEtudiantTable(Connection conn){
+        Statement statement;
+        try {
+            String query = "CREATE TABLE etudiants ("
+                    + "filiere_etudes VARCHAR(200)) INHERITS (utilisateurs)";
+            statement = conn.createStatement();
+            statement.execute(query);
+            System.out.println("etudiant table created successfully!");
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    public static void createProfesseurTable(Connection conn){
+        Statement statement;
+        try {
+            String query = "CREATE TABLE professeurs ("
+                    + "modele_enseigne VARCHAR(200)) INHERITS (utilisateurs)";
+            statement = conn.createStatement();
+            statement.execute(query);
+            System.out.println("professeur table created successfully!");
         }catch (Exception e){
             System.out.println(e);
         }
