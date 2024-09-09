@@ -1,7 +1,9 @@
 package metier.Model;
 
 import DAO.Intefaces.LivreDAO;
+import DAO.Intefaces.MagazineDAO;
 import DAO.impl.LivreDAOImpl;
+import DAO.impl.MagazineDAOImpl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,16 +13,15 @@ public class Bibliotheque {
     private static ArrayList<Livre> livres = new ArrayList<Livre>();
     private static ArrayList<Magazine> magazines = new ArrayList<Magazine>();
     private static HashMap<UUID, Document> docsMap = new HashMap<UUID, Document>();
+    private static MagazineDAO magazineDAO = new MagazineDAOImpl();
+    private static LivreDAO livreDAO = new LivreDAOImpl();
 
     public void ajouter(Livre livre) {
-        LivreDAO livreDAO = new LivreDAOImpl();
         livreDAO.save(livre);
     }
 
     public void ajouter(Magazine magazine) {
-        magazines.add(magazine);
-        docsMap.put(magazine.getId(), magazine);
-        System.out.println("magazine ajouté avec succès !");
+        magazineDAO.save(magazine);
     }
 //    public void ajouter(TheseUniversitaire theseUniversitaire) {
 //        magazines.add(theseUniversitaire);
@@ -126,6 +127,16 @@ public class Bibliotheque {
         for (Magazine magazine : magazines) {
             System.out.println(magazine);
         }
+    }
+
+    public void showAllBooks(){
+        LivreDAOImpl livreDAO = new LivreDAOImpl();
+        System.out.println(livreDAO.getAll());
+    }
+
+    public void getBook(UUID id){
+        LivreDAOImpl livreDAO = new LivreDAOImpl();
+        System.out.println(livreDAO.get(id));
     }
 
     public void rechercher(String titre) {

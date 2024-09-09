@@ -1,5 +1,6 @@
 package presentation;
 
+import DAO.impl.LivreDAOImpl;
 import metier.Model.Bibliotheque;
 import metier.Model.Livre;
 import metier.Model.Magazine;
@@ -44,6 +45,11 @@ public class ConsoleUI {
                 case 6 -> {
                     return;
                 }
+                case 7 -> {
+                    this.typeMenu("Modifier");
+                    int modifierType = input.nextInt();
+                    this.documentType(modifierType, "modifier");
+                }
             }
         }
     }
@@ -55,6 +61,7 @@ public class ConsoleUI {
         System.out.println("4.Afficher tous les documents");
         System.out.println("5.Rechercher un document");
         System.out.println("6.Quitter");
+        System.out.println("7.Modifier un document");
         System.out.print("=> ");
     }
 
@@ -113,6 +120,10 @@ public class ConsoleUI {
         }
     }
 
+    public void editMenu(String type){
+
+    }
+
     public void documentType(int docType, String operation) {
         Scanner input = new Scanner(System.in);
         Bibliotheque biblio = new Bibliotheque();
@@ -138,7 +149,7 @@ public class ConsoleUI {
                     biblio.emprunter(magTitre, "magazine");
                     break;
             }
-        } else {
+        } else if (operation.equals("retourner")){
             switch (docType) {
                 case 1:
                     System.out.print("donner le titre du livre a retourner: ");
@@ -149,6 +160,26 @@ public class ConsoleUI {
                     System.out.print("donner le titre du magazine a retourner: ");
                     String magTitre = input.nextLine();
                     biblio.retourner(magTitre, "magazine");
+                    break;
+            }
+        } else if (operation.equals("modifier")) {
+            switch (docType) {
+                case 1:
+                    biblio.showAllBooks();
+                    System.out.print("Type the ID of the book to modify: ");
+
+                    try {
+                        String idString = input.next();
+                        UUID bookID = UUID.fromString(idString);
+                        biblio.getBook(bookID);
+                        this.editMenu("livre");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Invalid UUID format. Please enter a valid UUID.");
+                    }
+
+                    break;
+                case 2:
+                    this.editMenu("magazine");
                     break;
             }
         }
