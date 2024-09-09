@@ -11,11 +11,14 @@ public class Migration {
 
     public static void createDatabase(){
         Connection conn = DbConnection.getInstance();
-        Migration.createDocumentsTable(conn);
-        Migration.createLivresTable(conn);
-        Migration.createMagazinesTable(conn);
-        Migration.createJournalTable(conn);
-        Migration.createTheseUniversitaireTable(conn);
+        createDocumentsTable(conn);
+        createLivresTable(conn);
+        createMagazinesTable(conn);
+        createJournalTable(conn);
+        createTheseUniversitaireTable(conn);
+        createUtilisateursTable(conn);
+        createEtudiantTable(conn);
+        createProfesseurTable(conn);
         DbConnection.closeConnection();
     }
 
@@ -86,7 +89,7 @@ public class Migration {
             System.out.println(e);
         }
     }
-    public static void createutilisateursTable(Connection conn){
+    public static void createUtilisateursTable(Connection conn){
         Statement statement;
         try {
             String query1 = "CREATE TYPE role AS ENUM ('etudiant', 'professeur');";
