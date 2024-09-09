@@ -1,20 +1,10 @@
-package metier.Documents;
+package metier.Model;
 
 import java.util.ArrayList;
 
 public class Magazine extends Document {
     private int numero;
-    private static ArrayList<Magazine> magazines = new ArrayList<Magazine>();
 
-    public void ajouter(){
-
-    }
-    public void emprunter(){
-
-    }
-    public void retourner(){
-
-    }
     public void afficherDetails(){
 
     }

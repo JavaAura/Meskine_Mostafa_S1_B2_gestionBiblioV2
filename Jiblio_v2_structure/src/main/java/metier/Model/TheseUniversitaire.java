@@ -1,4 +1,4 @@
-package metier.Documents;
+package metier.Model;
 
 public class TheseUniversitaire {
 }

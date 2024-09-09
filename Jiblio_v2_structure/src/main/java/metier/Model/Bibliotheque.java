@@ -1,4 +1,4 @@
-package metier.Documents;
+package metier.Model;
 
 import java.util.ArrayList;
 import java.util.HashMap;

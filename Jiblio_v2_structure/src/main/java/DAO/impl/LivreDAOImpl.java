@@ -2,7 +2,7 @@ package DAO.impl;
 
 import DAO.Intefaces.LivreDAO;
 import metier.Database.DbConnection;
-import metier.Documents.Livre;
+import metier.Model.Livre;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,7 +34,6 @@ public class LivreDAOImpl implements LivreDAO {
             if (result != 0) {
                 System.out.println("livre insere!");
             }
-
 
         } catch (SQLException e) {
             System.out.println(e);

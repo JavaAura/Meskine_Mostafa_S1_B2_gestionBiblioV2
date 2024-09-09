@@ -1,4 +1,4 @@
-package metier.Documents.Interfaces;
+package metier.Interfaces;
 
 public interface Empruntable {
     public void emprunter();

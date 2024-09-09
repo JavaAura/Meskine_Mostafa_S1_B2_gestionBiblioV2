@@ -2,9 +2,9 @@ package presentation;
 
 import DAO.Intefaces.LivreDAO;
 import DAO.impl.LivreDAOImpl;
-import metier.Documents.Bibliotheque;
-import metier.Documents.Livre;
-import metier.Documents.Magazine;
+import metier.Model.Bibliotheque;
+import metier.Model.Livre;
+import metier.Model.Magazine;
 import utilitaire.DateUtils;
 import utilitaire.Validation;
 

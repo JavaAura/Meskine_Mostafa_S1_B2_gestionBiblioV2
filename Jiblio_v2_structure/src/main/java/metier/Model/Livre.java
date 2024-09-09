@@ -1,15 +1,7 @@
-package metier.Documents;
+package metier.Model;
 
 public class Livre extends Document {
     private int ISBN;
-
-    public void emprunter() {
-
-    }
-
-    public void retourner() {
-
-    }
 
     public void afficherDetails() {
 

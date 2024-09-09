@@ -4,6 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validation {
+
+    private Validation(){}
     public static boolean isValidName(String name) {
         String regex = "^[A-Za-z]\\w{1,29}$";
         Pattern p = Pattern.compile(regex);

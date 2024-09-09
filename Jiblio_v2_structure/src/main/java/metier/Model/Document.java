@@ -1,4 +1,4 @@
-package metier.Documents;
+package metier.Model;
 
 import java.util.UUID;
 
@@ -9,11 +9,6 @@ abstract class Document {
     protected String datePublication;
     protected int nombreDePages;
     protected boolean isBorrowed;
-
-
-    abstract void emprunter();
-
-    abstract void retourner();
 
     abstract void afficherDetails();
 
