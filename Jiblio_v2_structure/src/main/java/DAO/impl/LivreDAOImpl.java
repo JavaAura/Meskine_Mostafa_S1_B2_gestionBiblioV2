@@ -18,27 +18,26 @@ public class LivreDAOImpl implements LivreDAO {
 
     @Override
     public void save(Livre livre) {
-        Connection conn = DbConnection.getInstance();
         try {
-            String query = "INSERT INTO livres (titre, auteur, datePublication, nombredepages, isbn) VALUES (?, ?, ?, ?, ?)";
+            String query = "INSERT INTO livres (id, titre, auteur, datePublication, nombredepages, isbn) VALUES (?, ?, ?, ?, ?, ?)";
+            Connection conn = DbConnection.getInstance();
             PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, livre.getTitre());
-            ps.setString(2, livre.getAuteur());
-            ps.setString(3, livre.getDatePublication());
-            ps.setInt(4, livre.getNombreDePages());
-            ps.setInt(5, livre.getISBN());
+            ps.setObject(1, livre.getId());
+            ps.setString(2, livre.getTitre());
+            ps.setString(3, livre.getAuteur());
+            ps.setString(4, livre.getDatePublication());
+            ps.setInt(5, livre.getNombreDePages());
+            ps.setInt(6, livre.getISBN());
 
             int result = ps.executeUpdate();
             DbConnection.closeConnection();
 
             if (result != 0) {
-                System.out.println("livre insere!");
+                System.out.println("livre ajouté avec succès !");
             }
-
         } catch (SQLException e) {
             System.out.println(e);
         }
-
     }
 
     @Override

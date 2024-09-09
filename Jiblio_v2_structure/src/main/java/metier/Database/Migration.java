@@ -4,13 +4,26 @@ import java.sql.Connection;
 import java.sql.Statement;
 
 public class Migration {
-//    Connection conn = DbConnection.getInstance();
+
+    private Migration(){
+
+    }
+
+    public static void createDatabase(){
+        Connection conn = DbConnection.getInstance();
+        Migration.createDocumentsTable(conn);
+        Migration.createLivresTable(conn);
+        Migration.createMagazinesTable(conn);
+        Migration.createJournalTable(conn);
+        Migration.createTheseUniversitaireTable(conn);
+        DbConnection.closeConnection();
+    }
 
     public static void createDocumentsTable(Connection conn){
         Statement statement;
         try {
             String query = "CREATE TABLE documents ("
-                    + "ID SERIAL PRIMARY KEY, "
+                    + "id UUID PRIMARY KEY, "
                     + "titre VARCHAR(50) NOT NULL, "
                     + "auteur VARCHAR(50) NOT NULL, "
                     + "datePublication VARCHAR(100) NOT NULL, "

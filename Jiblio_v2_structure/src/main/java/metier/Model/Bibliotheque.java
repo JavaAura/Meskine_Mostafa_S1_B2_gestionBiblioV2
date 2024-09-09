@@ -1,5 +1,8 @@
 package metier.Model;
 
+import DAO.Intefaces.LivreDAO;
+import DAO.impl.LivreDAOImpl;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -10,9 +13,8 @@ public class Bibliotheque {
     private static HashMap<UUID, Document> docsMap = new HashMap<UUID, Document>();
 
     public void ajouter(Livre livre) {
-        livres.add(livre);
-        docsMap.put(livre.getId(), livre);
-        System.out.println("livre ajouté avec succès !");
+        LivreDAO livreDAO = new LivreDAOImpl();
+        livreDAO.save(livre);
     }
 
     public void ajouter(Magazine magazine) {
@@ -20,6 +22,18 @@ public class Bibliotheque {
         docsMap.put(magazine.getId(), magazine);
         System.out.println("magazine ajouté avec succès !");
     }
+//    public void ajouter(TheseUniversitaire theseUniversitaire) {
+//        magazines.add(theseUniversitaire);
+//        docsMap.put(theseUniversitaire.getId(), theseUniversitaire);
+//        System.out.println("magazine ajouté avec succès !");
+//    }
+
+//    public void ajouter(JournalScientifique journalScientifique) {
+//        magazines.add(journalScientifique);
+//        docsMap.put(journalScientifique.getId(), journalScientifique);
+//        System.out.println("magazine ajouté avec succès !");
+//    }
+
 
     public void emprunter(String titre, String type) {
         if (type.equals("livre")) {
@@ -106,11 +120,11 @@ public class Bibliotheque {
     }
 
     public void afficherTout() {
-        for (int i = 0; i < livres.size(); i++) {
-            System.out.println(livres.get(i));
+        for (Livre livre : livres) {
+            System.out.println(livre);
         }
-        for (int i = 0; i < magazines.size(); i++) {
-            System.out.println(magazines.get(i));
+        for (Magazine magazine : magazines) {
+            System.out.println(magazine);
         }
     }
 
@@ -124,7 +138,7 @@ public class Bibliotheque {
             }
         }
         if (!found) {
-            System.out.println("aucun document trouvé sous le titre '" + titre +"'");
+            System.out.println("aucun document trouvé sous le titre '" + titre + "'");
         }
     }
 }

@@ -1,7 +1,5 @@
 package presentation;
 
-import DAO.Intefaces.LivreDAO;
-import DAO.impl.LivreDAOImpl;
 import metier.Model.Bibliotheque;
 import metier.Model.Livre;
 import metier.Model.Magazine;
@@ -88,13 +86,9 @@ public class ConsoleUI {
             int nombreDePages = this.getIntInput(input, "5.nombre de pages: ");
             livre.setNombreDePages(nombreDePages);
 
-//            livre.setBorrowed(false);
-//            livre.setId(UUID.randomUUID());
+            livre.setId(UUID.randomUUID());
 
-            LivreDAO livreDAO = new LivreDAOImpl();
-            livreDAO.save(livre);
-
-//            biblio.ajouter(livre);
+            biblio.ajouter(livre);
         } else {
             Magazine magazine = new Magazine();
 
@@ -113,7 +107,6 @@ public class ConsoleUI {
             int nombreDePages = this.getIntInput(input, "5.nombre de pages: ");
             magazine.setNombreDePages(nombreDePages);
 
-            magazine.setBorrowed(false);
             magazine.setId(UUID.randomUUID());
 
             biblio.ajouter(magazine);
