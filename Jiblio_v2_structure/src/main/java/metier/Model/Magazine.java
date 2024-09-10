@@ -1,11 +1,10 @@
 package metier.Model;
 
-import java.util.ArrayList;
 
 public class Magazine extends Document {
     private int numero;
 
-    public void afficherDetails(){
+    public void afficherDetails() {
 
     }
 
@@ -20,7 +19,7 @@ public class Magazine extends Document {
     @Override
     public String toString() {
         return "Magazine{" +
-                "numero=" + numero +
-                "} " + super.toString();
+                "numero=" + numero + super.toString() +
+                "} ";
     }
 }

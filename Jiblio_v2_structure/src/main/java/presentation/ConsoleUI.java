@@ -44,7 +44,7 @@ public class ConsoleUI {
                     this.documentType(retournerType, "retourner");
                 }
                 case 6 -> {
-                    biblio.showAllBooks();
+                    biblio.showAllDocuments();
                 }
                 case 7 -> {
                     System.out.print("donner le titre du document a rechercher: ");
@@ -93,7 +93,7 @@ public class ConsoleUI {
             String auteur = this.getStringInput(input, "3.nom de l'auteur: ");
             livre.setAuteur(auteur);
 
-            String date = this.getDateInput(input);
+            String date = this.getDateInput(input, "4.date de publication: ");
             livre.setDatePublication(date);
 
             int nombreDePages = this.getIntInput(input, "5.nombre de pages: ");
@@ -114,7 +114,7 @@ public class ConsoleUI {
             String auteur = this.getStringInput(input, "3.nom de l'auteur: ");
             magazine.setAuteur(auteur);
 
-            String date = this.getDateInput(input);
+            String date = this.getDateInput(input, "4.date de publication: ");
             magazine.setDatePublication(date);
 
             int nombreDePages = this.getIntInput(input, "5.nombre de pages: ");
@@ -143,7 +143,7 @@ public class ConsoleUI {
         livre.setAuteur(auteur);
 
         System.out.println("(old publish date: " + livre.getDatePublication() + ")");
-        String date = this.getDateInput(input);
+        String date = this.getDateInput(input, "4.new publish date: ");
         livre.setDatePublication(date);
 
         System.out.println("(old number of pages: " + livre.getNombreDePages() + ")");
@@ -248,10 +248,10 @@ public class ConsoleUI {
         }
     }
 
-    public String getDateInput(Scanner scan) {
+    public String getDateInput(Scanner scan, String message) {
         String date;
         while (true) {
-            System.out.print("4.date de publication: ");
+            System.out.print(message);
             date = scan.nextLine();
             if (DateUtils.isValidDate(date)) {
                 break;

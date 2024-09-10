@@ -6,16 +6,42 @@ import metier.Model.Magazine;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class MagazineDAOImpl implements MagazineDAO {
-//    public final Connection conn = DbConnection.getInstance();
 
     @Override
     public List<Magazine> getAll() {
-        return List.of();
+        List<Magazine> magazines = new ArrayList<>();
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "SELECT * FROM magazines";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Magazine magazine = new Magazine();
+                magazine.setId((UUID) rs.getObject("id"));
+                magazine.setTitre(rs.getString("titre"));
+                magazine.setAuteur(rs.getString("auteur"));
+                magazine.setDatePublication(rs.getString("datePublication"));
+                magazine.setNombreDePages(rs.getInt("nombredepages"));
+                magazine.setNumero(rs.getInt("numero"));
+
+                magazines.add(magazine);
+            }
+            rs.close();
+            ps.close();
+            DbConnection.closeConnection();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return magazines;
     }
 
     @Override
