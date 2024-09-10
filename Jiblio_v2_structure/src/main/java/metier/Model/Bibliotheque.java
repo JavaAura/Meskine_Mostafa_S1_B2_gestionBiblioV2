@@ -139,12 +139,23 @@ public class Bibliotheque {
         }
     }
 
-    public Livre getBook(UUID id){
+    public Livre getBook(UUID id) {
         return livreDAO.get(id);
     }
 
-    public void updateDocument(Livre livre){
+    public void updateDocument(Livre livre) {
         livreDAO.update(livre);
+    }
+
+    public void deleteDocument(String type, UUID id) {
+        switch (type) {
+            case "livre" -> {
+                livreDAO.delete(id);
+            }
+            case "magazine" -> {
+                magazineDAO.delete(id);
+            }
+        }
     }
 
     public void rechercher(String titre) {

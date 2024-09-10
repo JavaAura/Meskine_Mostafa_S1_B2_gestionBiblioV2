@@ -24,31 +24,36 @@ public class ConsoleUI {
                     this.documentType(ajouterType, "ajouter");
                 }
                 case 2 -> {
+                    this.typeMenu("Modifier");
+                    int modifierType = input.nextInt();
+                    this.documentType(modifierType, "modifier");
+                }
+                case 3 -> {
+                    this.typeMenu("Supprimer");
+                    int supprimerType = input.nextInt();
+                    this.documentType(supprimerType, "supprimer");
+                }
+                case 4 -> {
                     this.typeMenu("Emprunter");
                     int emprunterType = input.nextInt();
                     this.documentType(emprunterType, "emprunter");
                 }
-                case 3 -> {
+                case 5 -> {
                     this.typeMenu("Retourner");
                     int retournerType = input.nextInt();
                     this.documentType(retournerType, "retourner");
                 }
-                case 4 -> {
+                case 6 -> {
                     biblio.showAllBooks();
                 }
-                case 5 -> {
+                case 7 -> {
                     System.out.print("donner le titre du document a rechercher: ");
                     input.nextLine();
                     String titre = input.nextLine();
                     biblio.rechercher(titre);
                 }
-                case 6 -> {
+                default -> {
                     return;
-                }
-                case 7 -> {
-                    this.typeMenu("Modifier");
-                    int modifierType = input.nextInt();
-                    this.documentType(modifierType, "modifier");
                 }
             }
         }
@@ -56,12 +61,13 @@ public class ConsoleUI {
 
     public void mainMenu() {
         System.out.println("1.Ajouter un document");
-        System.out.println("2.Emprunter un document");
-        System.out.println("3.Retourner un document");
-        System.out.println("4.Afficher tous les documents");
-        System.out.println("5.Rechercher un document");
-        System.out.println("6.Quitter");
-        System.out.println("7.Modifier un document");
+        System.out.println("2.Modifier un document");
+        System.out.println("3.Supprimer un document");
+        System.out.println("4.Emprunter un document");
+        System.out.println("5.Retourner un document");
+        System.out.println("6.Afficher tous les documents");
+        System.out.println("7.Rechercher un document");
+        System.out.println("0.Quitter");
         System.out.print("=> ");
     }
 
@@ -120,31 +126,48 @@ public class ConsoleUI {
         }
     }
 
-    public void editMenu(String type, Livre livre, Scanner input){
+    public void editMenu(String type, Livre livre, Scanner input) {
         Bibliotheque biblio = new Bibliotheque();
 
-        System.out.println("(old book title: "+livre.getTitre()+")");
+        System.out.println("(old book title: " + livre.getTitre() + ")");
         input.nextLine();
         String titre = this.getStringInput(input, "new book title: ");
         livre.setTitre(titre);
 
-        System.out.println("(old ISBN: "+livre.getISBN()+")");
+        System.out.println("(old ISBN: " + livre.getISBN() + ")");
         int isbn = this.getIntInput(input, "new ISBN: ");
         livre.setISBN(isbn);
 
-        System.out.println("(old author name: "+livre.getAuteur()+")");
+        System.out.println("(old author name: " + livre.getAuteur() + ")");
         String auteur = this.getStringInput(input, "new author name: ");
         livre.setAuteur(auteur);
 
-        System.out.println("(old publish date: "+livre.getDatePublication()+")");
+        System.out.println("(old publish date: " + livre.getDatePublication() + ")");
         String date = this.getDateInput(input);
         livre.setDatePublication(date);
 
-        System.out.println("(old number of pages: "+livre.getNombreDePages()+")");
+        System.out.println("(old number of pages: " + livre.getNombreDePages() + ")");
         int nombreDePages = this.getIntInput(input, "new number of pages: ");
         livre.setNombreDePages(nombreDePages);
 
         biblio.updateDocument(livre);
+    }
+
+    public void deleteMenu(String type , Scanner scan , UUID id) {
+        System.out.println("Are u sure u want to delete this Document? (yes/no)");
+        System.out.print("=>");
+        String answer = scan.nextLine();
+        switch (answer) {
+            case "yes" ->{
+                Bibliotheque biblio = new Bibliotheque();
+                biblio.deleteDocument(type, id);
+            }
+            case "no" ->{
+                return;
+            }default -> {
+                return;
+            }
+        }
     }
 
     public void documentType(int docType, String operation) {
@@ -172,7 +195,7 @@ public class ConsoleUI {
                     biblio.emprunter(magTitre, "magazine");
                     break;
             }
-        } else if (operation.equals("retourner")){
+        } else if (operation.equals("retourner")) {
             switch (docType) {
                 case 1:
                     System.out.print("donner le titre du livre a retourner: ");
@@ -191,10 +214,28 @@ public class ConsoleUI {
                     biblio.showAllBooks();
                     System.out.print("Type the ID of the book to modify: ");
                     try {
-                        String idString = input.next();
+                        String idString = input.nextLine();
                         UUID bookID = UUID.fromString(idString);
                         Livre oldbook = biblio.getBook(bookID);
                         this.editMenu("livre", oldbook, input);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Invalid UUID format. Please enter a valid UUID.");
+                    }
+
+                    break;
+                case 2:
+//                    this.editMenu("magazine");
+                    break;
+            }
+        } else if (operation.equals("supprimer")) {
+            switch (docType) {
+                case 1:
+                    biblio.showAllBooks();
+                    System.out.print("Type the ID of the book to delete: ");
+                    try {
+                        String idString = input.nextLine();
+                        UUID bookID = UUID.fromString(idString);
+                        this.deleteMenu("livre", input, bookID);
                     } catch (IllegalArgumentException e) {
                         System.out.println("Invalid UUID format. Please enter a valid UUID.");
                     }
