@@ -258,9 +258,9 @@ public class ConsoleUI {
             }
         } else if (operation.equals("supprimer")) {
             switch (docType) {
-                case 1:
+                case 1->{
                     biblio.showAllBooks();
-                    System.out.print("Type the ID of the book to delete: ");
+                    System.out.print("Enter the book ID to delete: ");
                     try {
                         String idString = input.nextLine();
                         UUID bookID = UUID.fromString(idString);
@@ -268,11 +268,18 @@ public class ConsoleUI {
                     } catch (IllegalArgumentException e) {
                         System.out.println("Invalid UUID format. Please enter a valid UUID.");
                     }
-
-                    break;
-                case 2:
-//                    this.editMenu("magazine");
-                    break;
+                }
+                case 2-> {
+                    biblio.showAllMagazines();
+                    System.out.print("Enter the magazine ID to delete: ");
+                    try {
+                        String idString = input.nextLine();
+                        UUID magazineID = UUID.fromString(idString);
+                        this.deleteMenu("magazine", input, magazineID);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Invalid UUID format. Please enter a valid UUID.");
+                    }
+                }
             }
         }
     }
