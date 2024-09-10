@@ -126,7 +126,7 @@ public class ConsoleUI {
         }
     }
 
-    public void editMenu(String type, Livre livre, Scanner input) {
+    public void editMenu(Livre livre, Scanner input) {
         Bibliotheque biblio = new Bibliotheque();
 
         System.out.println("(old book title: " + livre.getTitre() + ")");
@@ -153,20 +153,40 @@ public class ConsoleUI {
         biblio.updateDocument(livre);
     }
 
+    public void editMenu(Magazine magazine, Scanner input) {
+        Bibliotheque biblio = new Bibliotheque();
+
+        System.out.println("(old magazine title: " + magazine.getTitre() + ")");
+        input.nextLine();
+        String titre = this.getStringInput(input, "new magazine title: ");
+        magazine.setTitre(titre);
+
+        System.out.println("(old Numero: " + magazine.getNumero() + ")");
+        int isbn = this.getIntInput(input, "new Numero: ");
+        magazine.setNumero(isbn);
+
+        System.out.println("(old author name: " + magazine.getAuteur() + ")");
+        String auteur = this.getStringInput(input, "new author name: ");
+        magazine.setAuteur(auteur);
+
+        System.out.println("(old publish date: " + magazine.getDatePublication() + ")");
+        String date = this.getDateInput(input, "4.new publish date: ");
+        magazine.setDatePublication(date);
+
+        System.out.println("(old number of pages: " + magazine.getNombreDePages() + ")");
+        int nombreDePages = this.getIntInput(input, "new number of pages: ");
+        magazine.setNombreDePages(nombreDePages);
+
+        biblio.updateDocument(magazine);
+    }
+
     public void deleteMenu(String type , Scanner scan , UUID id) {
         System.out.println("Are u sure u want to delete this Document? (yes/no)");
         System.out.print("=>");
         String answer = scan.nextLine();
-        switch (answer) {
-            case "yes" ->{
-                Bibliotheque biblio = new Bibliotheque();
-                biblio.deleteDocument(type, id);
-            }
-            case "no" ->{
-                return;
-            }default -> {
-                return;
-            }
+        if (answer.equals("yes")){
+            Bibliotheque biblio = new Bibliotheque();
+            biblio.deleteDocument(type, id);
         }
     }
 
@@ -210,22 +230,31 @@ public class ConsoleUI {
             }
         } else if (operation.equals("modifier")) {
             switch (docType) {
-                case 1:
+                case 1 ->{
                     biblio.showAllBooks();
-                    System.out.print("Type the ID of the book to modify: ");
+                    System.out.print("Enter the book ID to Modify: ");
                     try {
                         String idString = input.nextLine();
                         UUID bookID = UUID.fromString(idString);
                         Livre oldbook = biblio.getBook(bookID);
-                        this.editMenu("livre", oldbook, input);
+                        this.editMenu(oldbook, input);
                     } catch (IllegalArgumentException e) {
                         System.out.println("Invalid UUID format. Please enter a valid UUID.");
                     }
+                }
 
-                    break;
-                case 2:
-//                    this.editMenu("magazine");
-                    break;
+                case 2 ->{
+                    biblio.showAllMagazines();
+                    System.out.print("Enter the magazine ID to Modify: ");
+                    try {
+                        String idString = input.nextLine();
+                        UUID magazineID = UUID.fromString(idString);
+                        Magazine oldMagazine = biblio.getMagazine(magazineID);
+                        this.editMenu(oldMagazine, input);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Invalid UUID format. Please enter a valid UUID.");
+                    }
+                }
             }
         } else if (operation.equals("supprimer")) {
             switch (docType) {

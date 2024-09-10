@@ -2,6 +2,7 @@ package DAO.impl;
 
 import DAO.Intefaces.MagazineDAO;
 import metier.Database.DbConnection;
+import metier.Model.Livre;
 import metier.Model.Magazine;
 
 import java.sql.Connection;
@@ -46,7 +47,33 @@ public class MagazineDAOImpl implements MagazineDAO {
 
     @Override
     public Magazine get(UUID id) {
-        return null;
+        Magazine magazine = null;
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "SELECT * FROM magazines WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setObject(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                magazine = new Magazine();
+                magazine.setId((UUID) rs.getObject("id"));
+                magazine.setTitre(rs.getString("titre"));
+                magazine.setAuteur(rs.getString("auteur"));
+                magazine.setDatePublication(rs.getString("datePublication"));
+                magazine.setNombreDePages(rs.getInt("nombredepages"));
+                magazine.setNumero(rs.getInt("numero"));
+            }
+
+            rs.close();
+            ps.close();
+            DbConnection.closeConnection();
+        } catch (SQLException e) {
+            System.out.println("Error retrieving magazine: " + e.getMessage());
+        }
+
+        return magazine;
     }
 
     @Override
@@ -77,7 +104,29 @@ public class MagazineDAOImpl implements MagazineDAO {
 
     @Override
     public void update(Magazine magazine) {
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "UPDATE magazines SET titre = ?, auteur = ?, datePublication = ?, nombredepages = ?, numero = ? WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
 
+            ps.setString(1, magazine.getTitre());
+            ps.setString(2, magazine.getAuteur());
+            ps.setString(3, magazine.getDatePublication());
+            ps.setInt(4, magazine.getNombreDePages());
+            ps.setInt(5, magazine.getNumero());
+            ps.setObject(6, magazine.getId());
+
+            int result = ps.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("Magazine updated successfully!");
+            }
+
+            ps.close();
+            DbConnection.closeConnection();
+        } catch (SQLException e) {
+            System.out.println("Error updating book: " + e.getMessage());
+        }
     }
 
     @Override

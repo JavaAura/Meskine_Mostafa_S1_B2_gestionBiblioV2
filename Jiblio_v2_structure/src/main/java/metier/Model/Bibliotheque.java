@@ -134,6 +134,23 @@ public class Bibliotheque {
             }
         }
     }
+    public void showAllMagazines() {
+        List<Magazine> magazines = magazineDAO.getAll();
+
+        if (magazines.isEmpty()) {
+            System.out.println("No Magazines found.");
+        } else {
+            for (Magazine magazine : magazines) {
+                System.out.println("ID: " + magazine.getId());
+                System.out.println("Title: " + magazine.getTitre());
+                System.out.println("Author: " + magazine.getAuteur());
+                System.out.println("Publication Date: " + magazine.getDatePublication());
+                System.out.println("Number of Pages: " + magazine.getNombreDePages());
+                System.out.println("Numero: " + magazine.getNumero());
+                System.out.println("-------------");
+            }
+        }
+    }
 
     public void showAllDocuments() {
         List<Livre> livres = livreDAO.getAll();
@@ -149,9 +166,15 @@ public class Bibliotheque {
     public Livre getBook(UUID id) {
         return livreDAO.get(id);
     }
+    public Magazine getMagazine(UUID id) {
+        return magazineDAO.get(id);
+    }
 
     public void updateDocument(Livre livre) {
         livreDAO.update(livre);
+    }
+    public void updateDocument(Magazine magazine) {
+        magazineDAO.update(magazine);
     }
 
     public void deleteDocument(String type, UUID id) {
