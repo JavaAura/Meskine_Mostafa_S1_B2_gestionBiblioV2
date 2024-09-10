@@ -102,7 +102,29 @@ public class LivreDAOImpl implements LivreDAO {
 
     @Override
     public void update(Livre livre) {
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "UPDATE livres SET titre = ?, auteur = ?, datePublication = ?, nombredepages = ?, isbn = ? WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
 
+            ps.setString(1, livre.getTitre());
+            ps.setString(2, livre.getAuteur());
+            ps.setString(3, livre.getDatePublication());
+            ps.setInt(4, livre.getNombreDePages());
+            ps.setInt(5, livre.getISBN());
+            ps.setObject(6, livre.getId());
+
+            int result = ps.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("Book updated successfully!");
+            }
+
+            ps.close();
+            DbConnection.closeConnection();
+        } catch (SQLException e) {
+            System.out.println("Error updating book: " + e.getMessage());
+        }
     }
 
     @Override

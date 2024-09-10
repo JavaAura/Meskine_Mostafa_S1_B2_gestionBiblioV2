@@ -130,13 +130,15 @@ public class Bibliotheque {
     }
 
     public void showAllBooks(){
-        LivreDAOImpl livreDAO = new LivreDAOImpl();
         System.out.println(livreDAO.getAll());
     }
 
-    public void getBook(UUID id){
-        LivreDAOImpl livreDAO = new LivreDAOImpl();
-        System.out.println(livreDAO.get(id));
+    public Livre getBook(UUID id){
+        return livreDAO.get(id);
+    }
+
+    public void updateDocument(Livre livre){
+        livreDAO.update(livre);
     }
 
     public void rechercher(String titre) {

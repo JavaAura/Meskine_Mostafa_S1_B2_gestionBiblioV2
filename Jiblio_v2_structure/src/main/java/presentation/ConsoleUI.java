@@ -120,8 +120,31 @@ public class ConsoleUI {
         }
     }
 
-    public void editMenu(String type){
+    public void editMenu(String type, Livre livre, Scanner input){
+        Bibliotheque biblio = new Bibliotheque();
 
+        System.out.println("(old book title: "+livre.getTitre()+")");
+        input.nextLine();
+        String titre = this.getStringInput(input, "new book title: ");
+        livre.setTitre(titre);
+
+        System.out.println("(old ISBN: "+livre.getISBN()+")");
+        int isbn = this.getIntInput(input, "new ISBN: ");
+        livre.setISBN(isbn);
+
+        System.out.println("(old author name: "+livre.getAuteur()+")");
+        String auteur = this.getStringInput(input, "new author name: ");
+        livre.setAuteur(auteur);
+
+        System.out.println("(old publish date: "+livre.getDatePublication()+")");
+        String date = this.getDateInput(input);
+        livre.setDatePublication(date);
+
+        System.out.println("(old number of pages: "+livre.getNombreDePages()+")");
+        int nombreDePages = this.getIntInput(input, "new number of pages: ");
+        livre.setNombreDePages(nombreDePages);
+
+        biblio.updateDocument(livre);
     }
 
     public void documentType(int docType, String operation) {
@@ -167,19 +190,18 @@ public class ConsoleUI {
                 case 1:
                     biblio.showAllBooks();
                     System.out.print("Type the ID of the book to modify: ");
-
                     try {
                         String idString = input.next();
                         UUID bookID = UUID.fromString(idString);
-                        biblio.getBook(bookID);
-                        this.editMenu("livre");
+                        Livre oldbook = biblio.getBook(bookID);
+                        this.editMenu("livre", oldbook, input);
                     } catch (IllegalArgumentException e) {
                         System.out.println("Invalid UUID format. Please enter a valid UUID.");
                     }
 
                     break;
                 case 2:
-                    this.editMenu("magazine");
+//                    this.editMenu("magazine");
                     break;
             }
         }
