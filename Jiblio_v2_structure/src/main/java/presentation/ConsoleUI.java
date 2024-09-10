@@ -34,7 +34,7 @@ public class ConsoleUI {
                     this.documentType(retournerType, "retourner");
                 }
                 case 4 -> {
-                    biblio.afficherTout();
+                    biblio.showAllBooks();
                 }
                 case 5 -> {
                     System.out.print("donner le titre du document a rechercher: ");

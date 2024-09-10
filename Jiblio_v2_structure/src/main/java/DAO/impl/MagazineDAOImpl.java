@@ -55,7 +55,8 @@ public class MagazineDAOImpl implements MagazineDAO {
     }
 
     @Override
-    public void delete(Magazine magazine) {
-
+    public boolean delete(UUID id) {
+        return false;
     }
+
 }

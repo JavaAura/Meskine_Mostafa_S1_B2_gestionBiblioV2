@@ -7,6 +7,7 @@ import DAO.impl.MagazineDAOImpl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class Bibliotheque {
@@ -120,17 +121,22 @@ public class Bibliotheque {
         }
     }
 
-    public void afficherTout() {
-        for (Livre livre : livres) {
-            System.out.println(livre);
-        }
-        for (Magazine magazine : magazines) {
-            System.out.println(magazine);
-        }
-    }
+    public void showAllBooks() {
+        List<Livre> livres = livreDAO.getAll();
 
-    public void showAllBooks(){
-        System.out.println(livreDAO.getAll());
+        if (livres.isEmpty()) {
+            System.out.println("No books found.");
+        } else {
+            for (Livre livre : livres) {
+                System.out.println("ID: " + livre.getId());
+                System.out.println("Title: " + livre.getTitre());
+                System.out.println("Author: " + livre.getAuteur());
+                System.out.println("Publication Date: " + livre.getDatePublication());
+                System.out.println("Number of Pages: " + livre.getNombreDePages());
+                System.out.println("ISBN: " + livre.getISBN());
+                System.out.println("-------------");
+            }
+        }
     }
 
     public Livre getBook(UUID id){
