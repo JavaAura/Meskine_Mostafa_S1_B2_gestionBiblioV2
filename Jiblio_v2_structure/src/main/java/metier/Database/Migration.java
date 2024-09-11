@@ -93,7 +93,7 @@ public class Migration {
         Statement statement;
         try {
             String query1 = "CREATE TABLE utilisateurs ("
-                    + "ID SERIAL PRIMARY KEY, "
+                    + "id UUID PRIMARY KEY, "
                     + "username VARCHAR(250) NOT NULL, "
                     + "email VARCHAR(250) UNIQUE NOT NULL, "
                     + "password VARCHAR(250) NOT NULL, "

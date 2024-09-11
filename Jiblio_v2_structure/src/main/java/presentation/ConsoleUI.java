@@ -64,7 +64,7 @@ public class ConsoleUI {
                             int modifierType = input.nextInt();
                             this.userType(modifierType, "modifier");
                         }
-                        case 3->{
+                        case 3 -> {
                             this.userTypeMenu("Suprrimer");
                             int supprimerType = input.nextInt();
                             this.userType(supprimerType, "supprimer");
@@ -497,6 +497,18 @@ public class ConsoleUI {
     public void userType(int userType, String operation) {
         Scanner input = new Scanner(System.in);
         Bibliotheque biblio = new Bibliotheque();
+        switch (operation) {
+            case "ajouter" -> {
+                switch (userType) {
+                    case 1 -> {
+                        this.addMenu("etudiant");
+                    }
+                    case 2 -> {
+                        this.addMenu("professeur");
+                    }
+                }
+            }
+        }
     }
 
     public String getDateInput(Scanner scan, String message) {
