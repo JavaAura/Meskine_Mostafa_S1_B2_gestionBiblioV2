@@ -250,6 +250,17 @@ public class Bibliotheque {
         }
     }
 
+    public void deleteUser(String type, UUID id) {
+        switch (type) {
+            case "etudiant" -> {
+                etudiantDAO.delete(id);
+            }
+            case "professeur" -> {
+
+            }
+        }
+    }
+
     public void rechercher(String titre) {
 //        boolean found = false;
 //        for (Document doc : docsMap.values()) {

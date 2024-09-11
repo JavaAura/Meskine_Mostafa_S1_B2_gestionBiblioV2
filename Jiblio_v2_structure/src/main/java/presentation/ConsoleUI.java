@@ -367,6 +367,16 @@ public class ConsoleUI {
         }
     }
 
+    public void deleteUserMenu(String type, Scanner scan, UUID id) {
+        System.out.println("Are u sure u want to delete this User? (yes/no)");
+        System.out.print("=>");
+        String answer = scan.nextLine();
+        if (answer.equals("yes")) {
+            Bibliotheque biblio = new Bibliotheque();
+            biblio.deleteUser(type, id);
+        }
+    }
+
     public void documentType(int docType, String operation) {
         Scanner input = new Scanner(System.in);
         Bibliotheque biblio = new Bibliotheque();
@@ -526,7 +536,7 @@ public class ConsoleUI {
                     }
                 }
             }
-            case "modifier"->{
+            case "modifier" -> {
                 switch (userType) {
                     case 1 -> {
                         biblio.showAllEtudiant();
@@ -548,6 +558,32 @@ public class ConsoleUI {
                             UUID magazineID = UUID.fromString(idString);
                             Magazine oldMagazine = biblio.getMagazine(magazineID);
                             this.editMenu(oldMagazine, input);
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid UUID format. Please enter a valid UUID.");
+                        }
+                    }
+                }
+            }
+            case "supprimer" -> {
+                switch (userType) {
+                    case 1 -> {
+                        biblio.showAllEtudiant();
+                        System.out.print("Enter the student ID to delete: ");
+                        try {
+                            String idString = input.nextLine();
+                            UUID etudiantID = UUID.fromString(idString);
+                            this.deleteUserMenu("etudiant", input, etudiantID);
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid UUID format. Please enter a valid UUID.");
+                        }
+                    }
+                    case 2 -> {
+                        biblio.showAllMagazines();
+                        System.out.print("Enter the magazine ID to delete: ");
+                        try {
+                            String idString = input.nextLine();
+                            UUID magazineID = UUID.fromString(idString);
+                            this.deleteMenu("magazine", input, magazineID);
                         } catch (IllegalArgumentException e) {
                             System.out.println("Invalid UUID format. Please enter a valid UUID.");
                         }
