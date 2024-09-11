@@ -1,10 +1,11 @@
 package metier.Model;
 
-public class TheseUniversitaire {
+public class TheseUniversitaire extends Document {
     private String universite;
     private String domaine;
 
     public TheseUniversitaire() {
+
     }
 
     public String getUniversite() {
@@ -21,6 +22,11 @@ public class TheseUniversitaire {
 
     public void setDomaine(String domaine) {
         this.domaine = domaine;
+    }
+
+    @Override
+    void afficherDetails() {
+
     }
 
     @Override

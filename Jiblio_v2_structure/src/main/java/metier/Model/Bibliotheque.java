@@ -184,16 +184,16 @@ public class Bibliotheque {
     }
 
     public void rechercher(String titre) {
-        boolean found = false;
-        for (Document doc : docsMap.values()) {
-            if (doc.getTitre().equalsIgnoreCase(titre)) {
-                System.out.println(doc);
-                found = true;
-//                break;
-            }
-        }
-        if (!found) {
-            System.out.println("aucun document trouvé sous le titre '" + titre + "'");
-        }
+//        boolean found = false;
+//        for (Document doc : docsMap.values()) {
+//            if (doc.getTitre().equalsIgnoreCase(titre)) {
+//                System.out.println(doc);
+//                found = true;
+////                break;
+//            }
+//        }
+//        if (!found) {
+//            System.out.println("aucun document trouvé sous le titre '" + titre + "'");
+//        }
     }
 }
