@@ -79,45 +79,6 @@ public class Bibliotheque {
     }
 
     public void retourner(String titre, String type) {
-//        if (type.equals("livre")) {
-//            if (!livres.isEmpty()) {
-//                for (int i = 0; i < livres.size(); i++) {
-//                    if ((livres.get(i)).getTitre().equals(titre)) {
-//                        if (!(livres.get(i)).isBorrowed()) {
-//                            System.out.println("empruntez d'abord ce livre pour le rendre !");
-//                        } else {
-//                            (livres.get(i)).setBorrowed(false);
-//                            System.out.println("livre retourné avec succès !");
-//                        }
-//                        break;
-//                    }
-//                    if (i == (livres.size() - 1)) {
-//                        System.out.println("aucun livre trouvé sous ce titre !");
-//                    }
-//                }
-//            } else {
-//                System.out.println("ajoutez d’abord quelques livres !");
-//            }
-//        } else {
-//            if (!magazines.isEmpty()) {
-//                for (int i = 0; i < magazines.size(); i++) {
-//                    if ((magazines.get(i)).getTitre().equals(titre)) {
-//                        if (!(magazines.get(i)).isBorrowed()) {
-//                            System.out.println("empruntez d'abord ce magazine pour le rendre !");
-//                        } else {
-//                            (magazines.get(i)).setBorrowed(false);
-//                            System.out.println("magazine retourné avec succès !");
-//                        }
-//                        break;
-//                    }
-//                    if (i == (magazines.size() - 1)) {
-//                        System.out.println("aucun magazine trouvé sous ce titre !");
-//                    }
-//                }
-//            } else {
-//                System.out.println("ajoutez d’abord quelques magazines!");
-//            }
-//        }
     }
 
     public void showAllBooks() {
@@ -137,6 +98,7 @@ public class Bibliotheque {
             }
         }
     }
+
     public void showAllMagazines() {
         List<Magazine> magazines = magazineDAO.getAll();
 
