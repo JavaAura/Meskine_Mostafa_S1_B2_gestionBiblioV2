@@ -163,11 +163,19 @@ public class Bibliotheque {
     public void showAllDocuments() {
         List<Livre> livres = livreDAO.getAll();
         List<Magazine> magazines = magazineDAO.getAll();
+        List<JournalScientifique> journals = journalDAO.getAll();
+        List<TheseUniversitaire> theses = theseDAO.getAll();
 
         Stream<? extends Document> stream1 = livres.stream();
         Stream<? extends Document> stream2 = magazines.stream();
+        Stream<? extends Document> stream3 = journals.stream();
+        Stream<? extends Document> stream4 = theses.stream();
 
-        Stream<Document> combinedStream = Stream.concat(stream1, stream2);
+        Stream<Document> combinedStream = Stream.concat(
+                Stream.concat(stream1, stream2),
+                Stream.concat(stream3, stream4)
+        );
+
         combinedStream.forEach(System.out::println);
     }
 
