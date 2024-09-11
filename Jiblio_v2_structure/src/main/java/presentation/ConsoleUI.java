@@ -311,7 +311,7 @@ public class ConsoleUI {
                         System.out.println("Invalid UUID format. Please enter a valid UUID.");
                     }
                 }
-                case 3->{
+                case 3 -> {
                     biblio.showAllJournals();
                     System.out.print("Enter the journal ID to Modify: ");
                     try {
@@ -344,6 +344,17 @@ public class ConsoleUI {
                         String idString = input.nextLine();
                         UUID magazineID = UUID.fromString(idString);
                         this.deleteMenu("magazine", input, magazineID);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Invalid UUID format. Please enter a valid UUID.");
+                    }
+                }
+                case 3 -> {
+                    biblio.showAllJournals();
+                    System.out.print("Enter the journal ID to delete: ");
+                    try {
+                        String idString = input.nextLine();
+                        UUID journalID = UUID.fromString(idString);
+                        this.deleteMenu("journal", input, journalID);
                     } catch (IllegalArgumentException e) {
                         System.out.println("Invalid UUID format. Please enter a valid UUID.");
                     }

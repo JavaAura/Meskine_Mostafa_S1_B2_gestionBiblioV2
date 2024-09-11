@@ -35,7 +35,6 @@ public class Bibliotheque {
 //    }
 
 
-
     public void emprunter(String titre, String type) {
 //        if (type.equals("livre")) {
 //            if (!livres.isEmpty()) {
@@ -149,6 +148,7 @@ public class Bibliotheque {
     public Livre getBook(UUID id) {
         return livreDAO.get(id);
     }
+
     public Magazine getMagazine(UUID id) {
         return magazineDAO.get(id);
     }
@@ -160,9 +160,11 @@ public class Bibliotheque {
     public void updateDocument(Livre livre) {
         livreDAO.update(livre);
     }
+
     public void updateDocument(Magazine magazine) {
         magazineDAO.update(magazine);
     }
+
     public void updateDocument(JournalScientifique journal) {
         journalDAO.update(journal);
     }
@@ -174,6 +176,9 @@ public class Bibliotheque {
             }
             case "magazine" -> {
                 magazineDAO.delete(id);
+            }
+            case "journal" -> {
+                journalDAO.delete(id);
             }
         }
     }
