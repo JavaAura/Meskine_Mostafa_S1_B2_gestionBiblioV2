@@ -255,6 +255,36 @@ public class ConsoleUI {
         biblio.updateDocument(journal);
     }
 
+    public void editMenu(TheseUniversitaire these, Scanner input) {
+        Bibliotheque biblio = new Bibliotheque();
+
+        System.out.println("(old these title: " + these.getTitre() + ")");
+        String titre = this.getStringInput(input, "new these title: ");
+        these.setTitre(titre);
+
+        System.out.println("(old domain: " + these.getDomaine() + ")");
+        String domaine = this.getStringInput(input, "new domain: ");
+        these.setDomaine(domaine);
+
+        System.out.println("(old university: " + these.getUniversite() + ")");
+        String universite = this.getStringInput(input, "new university: ");
+        these.setUniversite(universite);
+
+        System.out.println("(old author name: " + these.getAuteur() + ")");
+        String auteur = this.getStringInput(input, "new author name: ");
+        these.setAuteur(auteur);
+
+        System.out.println("(old publish date: " + these.getDatePublication() + ")");
+        String date = this.getDateInput(input, "4.new publish date: ");
+        these.setDatePublication(date);
+
+        System.out.println("(old number of pages: " + these.getNombreDePages() + ")");
+        int nombreDePages = this.getIntInput(input, "new number of pages: ");
+        these.setNombreDePages(nombreDePages);
+
+        biblio.updateDocument(these);
+    }
+
     public void deleteMenu(String type, Scanner scan, UUID id) {
         System.out.println("Are u sure u want to delete this Document? (yes/no)");
         System.out.print("=>");
@@ -344,6 +374,18 @@ public class ConsoleUI {
                         UUID journalID = UUID.fromString(idString);
                         JournalScientifique oldJournal = biblio.getJournal(journalID);
                         this.editMenu(oldJournal, input);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Invalid UUID format. Please enter a valid UUID.");
+                    }
+                }
+                case 4 -> {
+                    biblio.showAllTheses();
+                    System.out.print("Enter the these ID to Modify: ");
+                    try {
+                        String idString = input.nextLine();
+                        UUID theseID = UUID.fromString(idString);
+                        TheseUniversitaire oldThese = biblio.getThese(theseID);
+                        this.editMenu(oldThese, input);
                     } catch (IllegalArgumentException e) {
                         System.out.println("Invalid UUID format. Please enter a valid UUID.");
                     }

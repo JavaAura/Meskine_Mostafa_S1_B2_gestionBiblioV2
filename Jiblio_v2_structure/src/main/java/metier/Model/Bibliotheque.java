@@ -191,6 +191,10 @@ public class Bibliotheque {
         return journalDAO.get(id);
     }
 
+    public TheseUniversitaire getThese(UUID id) {
+        return theseDAO.get(id);
+    }
+
     public void updateDocument(Livre livre) {
         livreDAO.update(livre);
     }
@@ -201,6 +205,10 @@ public class Bibliotheque {
 
     public void updateDocument(JournalScientifique journal) {
         journalDAO.update(journal);
+    }
+
+    public void updateDocument(TheseUniversitaire these) {
+        theseDAO.update(these);
     }
 
     public void deleteDocument(String type, UUID id) {
