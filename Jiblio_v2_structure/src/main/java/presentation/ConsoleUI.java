@@ -2,6 +2,7 @@ package presentation;
 
 import DAO.impl.LivreDAOImpl;
 import metier.Model.Bibliotheque;
+import metier.Model.JournalScientifique;
 import metier.Model.Livre;
 import metier.Model.Magazine;
 import utilitaire.DateUtils;
@@ -74,6 +75,8 @@ public class ConsoleUI {
     public void typeMenu(String action) {
         System.out.println("1." + action + " un Livre");
         System.out.println("2." + action + " un Magazine");
+        System.out.println("3." + action + " une journal Scientifique");
+        System.out.println("4." + action + " une These Universitaire");
         System.out.print("=> ");
     }
 
@@ -81,48 +84,73 @@ public class ConsoleUI {
         Scanner input = new Scanner(System.in);
         Bibliotheque biblio = new Bibliotheque();
 
-        if (type.equals("livre")) {
-            Livre livre = new Livre();
+        switch (type) {
+            case "livre" -> {
+                Livre livre = new Livre();
 
-            String titre = this.getStringInput(input, "1.titre du livre: ");
-            livre.setTitre(titre);
+                String titre = this.getStringInput(input, "1.titre du livre: ");
+                livre.setTitre(titre);
 
-            int isbn = this.getIntInput(input, "2.ISBN: ");
-            livre.setISBN(isbn);
+                int isbn = this.getIntInput(input, "2.ISBN: ");
+                livre.setISBN(isbn);
 
-            String auteur = this.getStringInput(input, "3.nom de l'auteur: ");
-            livre.setAuteur(auteur);
+                String auteur = this.getStringInput(input, "3.nom de l'auteur: ");
+                livre.setAuteur(auteur);
 
-            String date = this.getDateInput(input, "4.date de publication: ");
-            livre.setDatePublication(date);
+                String date = this.getDateInput(input, "4.date de publication: ");
+                livre.setDatePublication(date);
 
-            int nombreDePages = this.getIntInput(input, "5.nombre de pages: ");
-            livre.setNombreDePages(nombreDePages);
+                int nombreDePages = this.getIntInput(input, "5.nombre de pages: ");
+                livre.setNombreDePages(nombreDePages);
 
-            livre.setId(UUID.randomUUID());
+                livre.setId(UUID.randomUUID());
 
-            biblio.ajouter(livre);
-        } else {
-            Magazine magazine = new Magazine();
+                biblio.ajouter(livre);
+            }
+            case "magazine" -> {
+                Magazine magazine = new Magazine();
 
-            String titre = this.getStringInput(input, "1.titre du magazine: ");
-            magazine.setTitre(titre);
+                String titre = this.getStringInput(input, "1.titre du magazine: ");
+                magazine.setTitre(titre);
 
-            int numero = this.getIntInput(input, "2.numero du magazine: ");
-            magazine.setNumero(numero);
+                int numero = this.getIntInput(input, "2.numero du magazine: ");
+                magazine.setNumero(numero);
 
-            String auteur = this.getStringInput(input, "3.nom de l'auteur: ");
-            magazine.setAuteur(auteur);
+                String auteur = this.getStringInput(input, "3.nom de l'auteur: ");
+                magazine.setAuteur(auteur);
 
-            String date = this.getDateInput(input, "4.date de publication: ");
-            magazine.setDatePublication(date);
+                String date = this.getDateInput(input, "4.date de publication: ");
+                magazine.setDatePublication(date);
 
-            int nombreDePages = this.getIntInput(input, "5.nombre de pages: ");
-            magazine.setNombreDePages(nombreDePages);
+                int nombreDePages = this.getIntInput(input, "5.nombre de pages: ");
+                magazine.setNombreDePages(nombreDePages);
 
-            magazine.setId(UUID.randomUUID());
+                magazine.setId(UUID.randomUUID());
 
-            biblio.ajouter(magazine);
+                biblio.ajouter(magazine);
+            }
+            case "journal" -> {
+                JournalScientifique journal = new JournalScientifique();
+
+                String titre = this.getStringInput(input, "1.titre du journal: ");
+                journal.setTitre(titre);
+
+                String auteur = this.getStringInput(input, "2.nom de l'auteur: ");
+                journal.setAuteur(auteur);
+
+                String domaineRecherche = this.getStringInput(input, "3.domaine de recherche: ");
+                journal.setDomaineRecherche(domaineRecherche);
+
+                String date = this.getDateInput(input, "4.date de publication: ");
+                journal.setDatePublication(date);
+
+                int nombreDePages = this.getIntInput(input, "5.nombre de pages: ");
+                journal.setNombreDePages(nombreDePages);
+
+                journal.setId(UUID.randomUUID());
+
+                biblio.ajouter(journal);
+            }
         }
     }
 
@@ -157,7 +185,6 @@ public class ConsoleUI {
         Bibliotheque biblio = new Bibliotheque();
 
         System.out.println("(old magazine title: " + magazine.getTitre() + ")");
-        input.nextLine();
         String titre = this.getStringInput(input, "new magazine title: ");
         magazine.setTitre(titre);
 
@@ -180,11 +207,11 @@ public class ConsoleUI {
         biblio.updateDocument(magazine);
     }
 
-    public void deleteMenu(String type , Scanner scan , UUID id) {
+    public void deleteMenu(String type, Scanner scan, UUID id) {
         System.out.println("Are u sure u want to delete this Document? (yes/no)");
         System.out.print("=>");
         String answer = scan.nextLine();
-        if (answer.equals("yes")){
+        if (answer.equals("yes")) {
             Bibliotheque biblio = new Bibliotheque();
             biblio.deleteDocument(type, id);
         }
@@ -195,12 +222,15 @@ public class ConsoleUI {
         Bibliotheque biblio = new Bibliotheque();
         if (operation.equals("ajouter")) {
             switch (docType) {
-                case 1:
+                case 1 -> {
                     this.addMenu("livre");
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     this.addMenu("magazine");
-                    break;
+                }
+                case 3 -> {
+                    this.addMenu("journal");
+                }
             }
         } else if (operation.equals("emprunter")) {
             switch (docType) {
@@ -230,7 +260,7 @@ public class ConsoleUI {
             }
         } else if (operation.equals("modifier")) {
             switch (docType) {
-                case 1 ->{
+                case 1 -> {
                     biblio.showAllBooks();
                     System.out.print("Enter the book ID to Modify: ");
                     try {
@@ -243,7 +273,7 @@ public class ConsoleUI {
                     }
                 }
 
-                case 2 ->{
+                case 2 -> {
                     biblio.showAllMagazines();
                     System.out.print("Enter the magazine ID to Modify: ");
                     try {
@@ -258,7 +288,7 @@ public class ConsoleUI {
             }
         } else if (operation.equals("supprimer")) {
             switch (docType) {
-                case 1->{
+                case 1 -> {
                     biblio.showAllBooks();
                     System.out.print("Enter the book ID to delete: ");
                     try {
@@ -269,7 +299,7 @@ public class ConsoleUI {
                         System.out.println("Invalid UUID format. Please enter a valid UUID.");
                     }
                 }
-                case 2-> {
+                case 2 -> {
                     biblio.showAllMagazines();
                     System.out.print("Enter the magazine ID to delete: ");
                     try {

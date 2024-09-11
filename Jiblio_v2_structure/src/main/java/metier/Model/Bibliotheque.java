@@ -1,7 +1,9 @@
 package metier.Model;
 
+import DAO.Intefaces.JournalDAO;
 import DAO.Intefaces.LivreDAO;
 import DAO.Intefaces.MagazineDAO;
+import DAO.impl.JournalDAOImpl;
 import DAO.impl.LivreDAOImpl;
 import DAO.impl.MagazineDAOImpl;
 
@@ -12,6 +14,7 @@ public class Bibliotheque {
     private static HashMap<UUID, Document> docsMap = new HashMap<UUID, Document>();
     private static MagazineDAO magazineDAO = new MagazineDAOImpl();
     private static LivreDAO livreDAO = new LivreDAOImpl();
+    private static JournalDAO journalDAO = new JournalDAOImpl();
 
     public void ajouter(Livre livre) {
         livreDAO.save(livre);
@@ -21,17 +24,16 @@ public class Bibliotheque {
         magazineDAO.save(magazine);
     }
 
+    public void ajouter(JournalScientifique journal) {
+        journalDAO.save(journal);
+    }
+
 //    public void ajouter(TheseUniversitaire theseUniversitaire) {
 //        magazines.add(theseUniversitaire);
 //        docsMap.put(theseUniversitaire.getId(), theseUniversitaire);
 //        System.out.println("magazine ajouté avec succès !");
 //    }
 
-//    public void ajouter(JournalScientifique journalScientifique) {
-//        magazines.add(journalScientifique);
-//        docsMap.put(journalScientifique.getId(), journalScientifique);
-//        System.out.println("magazine ajouté avec succès !");
-//    }
 
 
     public void emprunter(String titre, String type) {
