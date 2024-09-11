@@ -20,6 +20,7 @@ public class Bibliotheque {
     public void ajouter(Magazine magazine) {
         magazineDAO.save(magazine);
     }
+
 //    public void ajouter(TheseUniversitaire theseUniversitaire) {
 //        magazines.add(theseUniversitaire);
 //        docsMap.put(theseUniversitaire.getId(), theseUniversitaire);
