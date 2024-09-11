@@ -4,6 +4,7 @@ import java.util.UUID;
 
 abstract class Utilisateur {
     protected UUID id;
+    protected String username;
     protected String email;
     protected String password;
 
@@ -16,6 +17,14 @@ abstract class Utilisateur {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {

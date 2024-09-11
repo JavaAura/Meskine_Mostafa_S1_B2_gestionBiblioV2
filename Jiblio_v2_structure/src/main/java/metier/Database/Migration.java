@@ -92,17 +92,14 @@ public class Migration {
     public static void createUtilisateursTable(Connection conn){
         Statement statement;
         try {
-            String query1 = "CREATE TYPE role AS ENUM ('etudiant', 'professeur');";
-            String query2 = "CREATE TABLE utilisateurs ("
+            String query1 = "CREATE TABLE utilisateurs ("
                     + "ID SERIAL PRIMARY KEY, "
+                    + "username VARCHAR(250) NOT NULL, "
                     + "email VARCHAR(250) UNIQUE NOT NULL, "
                     + "password VARCHAR(250) NOT NULL, "
-                    + "user_role role, "
                     + "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
             statement = conn.createStatement();
-            statement.addBatch(query1);
-            statement.addBatch(query2);
-            statement.executeBatch();
+            statement.executeUpdate(query1);
             System.out.println("users table created successfully!");
         }catch (Exception e){
             System.out.println(e);
