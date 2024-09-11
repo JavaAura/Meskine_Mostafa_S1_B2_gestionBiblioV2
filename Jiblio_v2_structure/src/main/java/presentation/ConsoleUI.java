@@ -50,6 +50,27 @@ public class ConsoleUI {
                     String titre = input.nextLine();
                     biblio.rechercher(titre);
                 }
+                case 8 -> {
+                    this.userMenu();
+                    int userAction = input.nextInt();
+                    switch (userAction) {
+                        case 1 -> {
+                            this.userTypeMenu("Ajouter");
+                            int ajouterType = input.nextInt();
+                            this.userType(ajouterType, "ajouter");
+                        }
+                        case 2 -> {
+                            this.userTypeMenu("Modifier");
+                            int modifierType = input.nextInt();
+                            this.userType(modifierType, "modifier");
+                        }
+                        case 3->{
+                            this.userTypeMenu("Suprrimer");
+                            int supprimerType = input.nextInt();
+                            this.userType(supprimerType, "supprimer");
+                        }
+                    }
+                }
                 default -> {
                     return;
                 }
@@ -65,7 +86,15 @@ public class ConsoleUI {
         System.out.println("5.Retourner un document");
         System.out.println("6.Afficher tous les documents");
         System.out.println("7.Rechercher un document");
+        System.out.println("8.Gere les utilisateurs");
         System.out.println("0.Quitter");
+        System.out.print("=> ");
+    }
+
+    public void userMenu() {
+        System.out.println("1.Ajouter un utilisateur");
+        System.out.println("2.Modifier un utilisateur");
+        System.out.println("3.Supprimer un utilisateur");
         System.out.print("=> ");
     }
 
@@ -74,6 +103,12 @@ public class ConsoleUI {
         System.out.println("2." + action + " un Magazine");
         System.out.println("3." + action + " une journal Scientifique");
         System.out.println("4." + action + " une These Universitaire");
+        System.out.print("=> ");
+    }
+
+    public void userTypeMenu(String action) {
+        System.out.println("1." + action + " un Etudiant");
+        System.out.println("2." + action + " un Professeur");
         System.out.print("=> ");
     }
 
@@ -172,6 +207,25 @@ public class ConsoleUI {
                 these.setId(UUID.randomUUID());
 
                 biblio.ajouter(these);
+            }
+            case "etudiant" -> {
+                Etudiant etudiant = new Etudiant();
+
+                String username = this.getStringInput(input, "1.nom d'etudiant: ");
+                etudiant.setUsername(username);
+
+                String email = this.getStringInput(input, "3.email: ");
+                etudiant.setEmail(email);
+
+                String password = this.getStringInput(input, "3.password: ");
+                etudiant.setPassword(password);
+
+                String filiere = this.getStringInput(input, "4.filiere_etudes: ");
+                etudiant.setFiliere_etudes(filiere);
+
+                etudiant.setId(UUID.randomUUID());
+
+                biblio.ajouter(etudiant);
             }
         }
     }
@@ -438,6 +492,11 @@ public class ConsoleUI {
                 }
             }
         }
+    }
+
+    public void userType(int userType, String operation) {
+        Scanner input = new Scanner(System.in);
+        Bibliotheque biblio = new Bibliotheque();
     }
 
     public String getDateInput(Scanner scan, String message) {
