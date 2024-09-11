@@ -3,9 +3,11 @@ package metier.Model;
 import DAO.Intefaces.JournalDAO;
 import DAO.Intefaces.LivreDAO;
 import DAO.Intefaces.MagazineDAO;
+import DAO.Intefaces.TheseDAO;
 import DAO.impl.JournalDAOImpl;
 import DAO.impl.LivreDAOImpl;
 import DAO.impl.MagazineDAOImpl;
+import DAO.impl.TheseDAOImpl;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -15,6 +17,7 @@ public class Bibliotheque {
     private static MagazineDAO magazineDAO = new MagazineDAOImpl();
     private static LivreDAO livreDAO = new LivreDAOImpl();
     private static JournalDAO journalDAO = new JournalDAOImpl();
+    private static TheseDAO theseDAO = new TheseDAOImpl();
 
     public void ajouter(Livre livre) {
         livreDAO.save(livre);
@@ -26,6 +29,10 @@ public class Bibliotheque {
 
     public void ajouter(JournalScientifique journal) {
         journalDAO.save(journal);
+    }
+
+    public void ajouter(TheseUniversitaire these) {
+        theseDAO.save(these);
     }
 
 //    public void ajouter(TheseUniversitaire theseUniversitaire) {

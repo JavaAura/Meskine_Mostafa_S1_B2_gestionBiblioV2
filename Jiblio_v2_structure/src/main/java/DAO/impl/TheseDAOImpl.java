@@ -72,7 +72,6 @@ public class TheseDAOImpl implements TheseDAO {
         } catch (SQLException e) {
             System.out.println("Error retrieving These: " + e.getMessage());
         }
-
         return these;
     }
 

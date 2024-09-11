@@ -1,10 +1,7 @@
 package presentation;
 
 import DAO.impl.LivreDAOImpl;
-import metier.Model.Bibliotheque;
-import metier.Model.JournalScientifique;
-import metier.Model.Livre;
-import metier.Model.Magazine;
+import metier.Model.*;
 import utilitaire.DateUtils;
 import utilitaire.Validation;
 
@@ -151,6 +148,31 @@ public class ConsoleUI {
 
                 biblio.ajouter(journal);
             }
+            case "these" -> {
+                TheseUniversitaire these = new TheseUniversitaire();
+
+                String titre = this.getStringInput(input, "1.titre du these: ");
+                these.setTitre(titre);
+
+                String auteur = this.getStringInput(input, "2.nom de l'auteur: ");
+                these.setAuteur(auteur);
+
+                String domaine = this.getStringInput(input, "3.domaine: ");
+                these.setDomaine(domaine);
+
+                String universite = this.getStringInput(input, "4.universite: ");
+                these.setUniversite(universite);
+
+                String date = this.getDateInput(input, "5.date de publication: ");
+                these.setDatePublication(date);
+
+                int nombreDePages = this.getIntInput(input, "6.nombre de pages: ");
+                these.setNombreDePages(nombreDePages);
+
+                these.setId(UUID.randomUUID());
+
+                biblio.ajouter(these);
+            }
         }
     }
 
@@ -256,6 +278,9 @@ public class ConsoleUI {
                 }
                 case 3 -> {
                     this.addMenu("journal");
+                }
+                case 4 -> {
+                    this.addMenu("these");
                 }
             }
         } else if (operation.equals("emprunter")) {
