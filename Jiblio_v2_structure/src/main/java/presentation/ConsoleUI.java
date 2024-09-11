@@ -207,6 +207,32 @@ public class ConsoleUI {
         biblio.updateDocument(magazine);
     }
 
+    public void editMenu(JournalScientifique journal, Scanner input) {
+        Bibliotheque biblio = new Bibliotheque();
+
+        System.out.println("(old journal title: " + journal.getTitre() + ")");
+        String titre = this.getStringInput(input, "new journal title: ");
+        journal.setTitre(titre);
+
+        System.out.println("(old research domain: " + journal.getDomaineRecherche() + ")");
+        String domaineRecherche = this.getStringInput(input, "new research domain: ");
+        journal.setDomaineRecherche(domaineRecherche);
+
+        System.out.println("(old author name: " + journal.getAuteur() + ")");
+        String auteur = this.getStringInput(input, "new author name: ");
+        journal.setAuteur(auteur);
+
+        System.out.println("(old publish date: " + journal.getDatePublication() + ")");
+        String date = this.getDateInput(input, "4.new publish date: ");
+        journal.setDatePublication(date);
+
+        System.out.println("(old number of pages: " + journal.getNombreDePages() + ")");
+        int nombreDePages = this.getIntInput(input, "new number of pages: ");
+        journal.setNombreDePages(nombreDePages);
+
+        biblio.updateDocument(journal);
+    }
+
     public void deleteMenu(String type, Scanner scan, UUID id) {
         System.out.println("Are u sure u want to delete this Document? (yes/no)");
         System.out.print("=>");
@@ -281,6 +307,18 @@ public class ConsoleUI {
                         UUID magazineID = UUID.fromString(idString);
                         Magazine oldMagazine = biblio.getMagazine(magazineID);
                         this.editMenu(oldMagazine, input);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Invalid UUID format. Please enter a valid UUID.");
+                    }
+                }
+                case 3->{
+                    biblio.showAllJournals();
+                    System.out.print("Enter the journal ID to Modify: ");
+                    try {
+                        String idString = input.nextLine();
+                        UUID journalID = UUID.fromString(idString);
+                        JournalScientifique oldJournal = biblio.getJournal(journalID);
+                        this.editMenu(oldJournal, input);
                     } catch (IllegalArgumentException e) {
                         System.out.println("Invalid UUID format. Please enter a valid UUID.");
                     }

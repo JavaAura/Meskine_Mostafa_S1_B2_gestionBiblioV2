@@ -155,6 +155,24 @@ public class Bibliotheque {
         }
     }
 
+    public void showAllJournals() {
+        List<JournalScientifique> journals = journalDAO.getAll();
+
+        if (journals.isEmpty()) {
+            System.out.println("No Journals found.");
+        } else {
+            for (JournalScientifique journal : journals) {
+                System.out.println("ID: " + journal.getId());
+                System.out.println("Title: " + journal.getTitre());
+                System.out.println("Author: " + journal.getAuteur());
+                System.out.println("Publication Date: " + journal.getDatePublication());
+                System.out.println("Number of Pages: " + journal.getNombreDePages());
+                System.out.println("Domaine de recherche: " + journal.getDomaineRecherche());
+                System.out.println("-------------");
+            }
+        }
+    }
+
     public void showAllDocuments() {
         List<Livre> livres = livreDAO.getAll();
         List<Magazine> magazines = magazineDAO.getAll();
@@ -173,11 +191,18 @@ public class Bibliotheque {
         return magazineDAO.get(id);
     }
 
+    public JournalScientifique getJournal(UUID id) {
+        return journalDAO.get(id);
+    }
+
     public void updateDocument(Livre livre) {
         livreDAO.update(livre);
     }
     public void updateDocument(Magazine magazine) {
         magazineDAO.update(magazine);
+    }
+    public void updateDocument(JournalScientifique journal) {
+        journalDAO.update(journal);
     }
 
     public void deleteDocument(String type, UUID id) {
