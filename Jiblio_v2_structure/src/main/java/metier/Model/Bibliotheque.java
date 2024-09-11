@@ -159,6 +159,21 @@ public class Bibliotheque {
         }
     }
 
+    public void showAllEtudiant() {
+        List<Etudiant> etudiants = etudiantDAO.getAll();
+
+        if (etudiants.isEmpty()) {
+            System.out.println("No users found.");
+        } else {
+            for (Etudiant etudiant : etudiants) {
+                System.out.println("ID: " + etudiant.getId());
+                System.out.println("Username: " + etudiant.getUsername());
+                System.out.println("Email: " + etudiant.getEmail());
+                System.out.println("-------------");
+            }
+        }
+    }
+
     public void showAllDocuments() {
         List<Livre> livres = livreDAO.getAll();
         List<Magazine> magazines = magazineDAO.getAll();
@@ -194,6 +209,10 @@ public class Bibliotheque {
         return theseDAO.get(id);
     }
 
+    public Etudiant getEtudiant(UUID id) {
+        return etudiantDAO.get(id);
+    }
+
     public void updateDocument(Livre livre) {
         livreDAO.update(livre);
     }
@@ -208,6 +227,10 @@ public class Bibliotheque {
 
     public void updateDocument(TheseUniversitaire these) {
         theseDAO.update(these);
+    }
+
+    public void updateUser(Etudiant etudiant) {
+        etudiantDAO.update(etudiant);
     }
 
     public void deleteDocument(String type, UUID id) {

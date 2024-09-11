@@ -339,6 +339,24 @@ public class ConsoleUI {
         biblio.updateDocument(these);
     }
 
+    public void editMenu(Etudiant etudiant, Scanner input) {
+        Bibliotheque biblio = new Bibliotheque();
+
+        System.out.println("(old username: " + etudiant.getUsername() + ")");
+        String username = this.getStringInput(input, "new username: ");
+        etudiant.setUsername(username);
+
+        System.out.println("(old email: " + etudiant.getEmail() + ")");
+        String email = this.getStringInput(input, "new email: ");
+        etudiant.setEmail(email);
+
+        System.out.println("(old password: " + etudiant.getPassword() + ")");
+        String password = this.getStringInput(input, "new password: ");
+        etudiant.setPassword(password);
+
+        biblio.updateUser(etudiant);
+    }
+
     public void deleteMenu(String type, Scanner scan, UUID id) {
         System.out.println("Are u sure u want to delete this Document? (yes/no)");
         System.out.print("=>");
@@ -505,6 +523,34 @@ public class ConsoleUI {
                     }
                     case 2 -> {
                         this.addMenu("professeur");
+                    }
+                }
+            }
+            case "modifier"->{
+                switch (userType) {
+                    case 1 -> {
+                        biblio.showAllEtudiant();
+                        System.out.print("Enter the student ID to Modify: ");
+                        try {
+                            String idString = input.nextLine();
+                            UUID etudiantID = UUID.fromString(idString);
+                            Etudiant oldEtudiant = biblio.getEtudiant(etudiantID);
+                            this.editMenu(oldEtudiant, input);
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid UUID format. Please enter a valid UUID.");
+                        }
+                    }
+                    case 2 -> {
+                        biblio.showAllMagazines();
+                        System.out.print("Enter the teacher ID to Modify: ");
+                        try {
+                            String idString = input.nextLine();
+                            UUID magazineID = UUID.fromString(idString);
+                            Magazine oldMagazine = biblio.getMagazine(magazineID);
+                            this.editMenu(oldMagazine, input);
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid UUID format. Please enter a valid UUID.");
+                        }
                     }
                 }
             }
