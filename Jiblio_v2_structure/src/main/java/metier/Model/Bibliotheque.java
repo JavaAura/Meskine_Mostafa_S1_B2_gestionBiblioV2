@@ -222,6 +222,9 @@ public class Bibliotheque {
             case "journal" -> {
                 journalDAO.delete(id);
             }
+            case "these" -> {
+                theseDAO.delete(id);
+            }
         }
     }
 

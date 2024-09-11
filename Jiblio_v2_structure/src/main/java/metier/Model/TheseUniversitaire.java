@@ -29,11 +29,13 @@ public class TheseUniversitaire extends Document {
 
     }
 
+
+
     @Override
     public String toString() {
         return "TheseUniversitaire{" +
                 "universite='" + universite + '\'' +
-                ", domaine='" + domaine + '\'' +
-                '}';
+                ", domaine='" + domaine + '\'' +  super.toString() +
+                "} ";
     }
 }
