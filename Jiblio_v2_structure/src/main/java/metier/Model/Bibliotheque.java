@@ -141,6 +141,25 @@ public class Bibliotheque {
         }
     }
 
+    public void showAllTheses() {
+        List<TheseUniversitaire> theses = theseDAO.getAll();
+
+        if (theses.isEmpty()) {
+            System.out.println("No Theses found.");
+        } else {
+            for (TheseUniversitaire these : theses) {
+                System.out.println("ID: " + these.getId());
+                System.out.println("Title: " + these.getTitre());
+                System.out.println("Author: " + these.getAuteur());
+                System.out.println("Publication Date: " + these.getDatePublication());
+                System.out.println("Number of Pages: " + these.getNombreDePages());
+                System.out.println("Domaine: " + these.getDomaine());
+                System.out.println("Universite: " + these.getUniversite());
+                System.out.println("-------------");
+            }
+        }
+    }
+
     public void showAllDocuments() {
         List<Livre> livres = livreDAO.getAll();
         List<Magazine> magazines = magazineDAO.getAll();
