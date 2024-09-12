@@ -433,16 +433,15 @@ public class ConsoleUI {
             }
         } else if (operation.equals("emprunter")) {
             switch (docType) {
-                case 1:
-                    System.out.print("donner le titre du livre a emprunter: ");
-                    String livreTitre = input.nextLine();
-                    biblio.emprunter(livreTitre, "livre");
-                    break;
-                case 2:
-                    System.out.print("donner le titre du magazine a emprunter: ");
-                    String magTitre = input.nextLine();
-                    biblio.emprunter(magTitre, "magazine");
-                    break;
+                case 1 -> {
+                    biblio.showAllDocuments();
+                    biblio.borrow("livre", input);
+                }
+                case 2->{
+//                    System.out.print("donner le titre du magazine a emprunter: ");
+//                    String magTitre = input.nextLine();
+//                    biblio.emprunter(magTitre, "magazine");
+                }
             }
         } else if (operation.equals("retourner")) {
             switch (docType) {
@@ -629,7 +628,7 @@ public class ConsoleUI {
         }
     }
 
-    public String getDateInput(Scanner scan, String message) {
+    public static String getDateInput(Scanner scan, String message) {
         String date;
         while (true) {
             System.out.print(message);

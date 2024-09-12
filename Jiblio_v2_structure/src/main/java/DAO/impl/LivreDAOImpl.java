@@ -2,6 +2,7 @@ package DAO.impl;
 
 import DAO.Intefaces.LivreDAO;
 import metier.Database.DbConnection;
+import metier.Interfaces.Empruntable;
 import metier.Model.Livre;
 
 import java.sql.Connection;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class LivreDAOImpl implements LivreDAO {
+public class LivreDAOImpl implements LivreDAO, Empruntable {
 
     @Override
     public List<Livre> getAll() {
@@ -153,5 +154,47 @@ public class LivreDAOImpl implements LivreDAO {
         }
 
         return isDeleted;
+    }
+
+    @Override
+    public void emprunter(UUID id) {
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "UPDATE livres SET isBorrowed = false WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setObject(1, id);
+
+            int result = ps.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("Book borrowed!");
+            }
+
+            ps.close();
+            DbConnection.closeConnection();
+        } catch (SQLException e) {
+            System.out.println("Error borrowing book: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void retourner(UUID id) {
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "UPDATE livres SET isBorrowed = true WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setObject(1, id);
+
+            int result = ps.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("Book borrowed!");
+            }
+
+            ps.close();
+            DbConnection.closeConnection();
+        } catch (SQLException e) {
+            System.out.println("Error borrowing book: " + e.getMessage());
+        }
     }
 }

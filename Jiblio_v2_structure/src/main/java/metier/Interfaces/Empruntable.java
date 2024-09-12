@@ -1,6 +1,8 @@
 package metier.Interfaces;
 
+import java.util.UUID;
+
 public interface Empruntable {
-    public void emprunter();
-    public void retourner();
+    void emprunter(UUID id);
+    void retourner(UUID id);
 }

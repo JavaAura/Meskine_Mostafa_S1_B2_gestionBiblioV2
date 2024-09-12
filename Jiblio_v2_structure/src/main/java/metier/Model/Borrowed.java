@@ -4,13 +4,14 @@ import java.util.UUID;
 
 public class Borrowed {
     private UUID id;
-    private UUID utilisateur_id;
-    private UUID document_id;
+    private UUID utilisateurID;
+    private UUID documentID;
     private boolean isBorrowed;
     private boolean isReserved;
     private String returnDate;
 
     public Borrowed() {
+
     }
 
     public UUID getId() {
@@ -22,19 +23,19 @@ public class Borrowed {
     }
 
     public UUID getUtilisateur_id() {
-        return utilisateur_id;
+        return utilisateurID;
     }
 
-    public void setUtilisateur_id(UUID utilisateur_id) {
-        this.utilisateur_id = utilisateur_id;
+    public void setUtilisateur_id(UUID utilisateurID) {
+        this.utilisateurID = utilisateurID;
     }
 
     public UUID getDocument_id() {
-        return document_id;
+        return documentID;
     }
 
-    public void setDocument_id(UUID document_id) {
-        this.document_id = document_id;
+    public void setDocument_id(UUID documentID) {
+        this.documentID = documentID;
     }
 
     public boolean isBorrowed() {
