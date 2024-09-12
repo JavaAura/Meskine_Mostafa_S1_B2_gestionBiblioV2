@@ -227,6 +227,25 @@ public class ConsoleUI {
 
                 biblio.ajouter(etudiant);
             }
+            case "professeur" -> {
+                Professeur professeur = new Professeur();
+
+                String username = this.getStringInput(input, "1.nom du professeur: ");
+                professeur.setUsername(username);
+
+                String email = this.getStringInput(input, "3.email: ");
+                professeur.setEmail(email);
+
+                String password = this.getStringInput(input, "3.password: ");
+                professeur.setPassword(password);
+
+                String filiere = this.getStringInput(input, "4.module_enseigne: ");
+                professeur.setModele_enseigne(filiere);
+
+                professeur.setId(UUID.randomUUID());
+
+                biblio.ajouter(professeur);
+            }
         }
     }
 

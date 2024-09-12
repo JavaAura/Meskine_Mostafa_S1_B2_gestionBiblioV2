@@ -13,6 +13,7 @@ public class Bibliotheque {
     private static JournalDAO journalDAO = new JournalDAOImpl();
     private static TheseDAO theseDAO = new TheseDAOImpl();
     private static EtudiantDAO etudiantDAO = new EtudiantDAOImpl();
+    private static ProfesseurDAO professeurDAO = new ProfesseurDAOImpl();
 
     public void ajouter(Livre livre) {
         livreDAO.save(livre);
@@ -32,6 +33,10 @@ public class Bibliotheque {
 
     public void ajouter(Etudiant etudiant) {
         etudiantDAO.save(etudiant);
+    }
+
+    public void ajouter(Professeur professeur) {
+        professeurDAO.save(professeur);
     }
 
 //    public void ajouter(TheseUniversitaire theseUniversitaire) {
