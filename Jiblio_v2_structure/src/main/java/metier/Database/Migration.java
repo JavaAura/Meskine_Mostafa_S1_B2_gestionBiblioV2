@@ -19,6 +19,7 @@ public class Migration {
         createUtilisateursTable(conn);
         createEtudiantTable(conn);
         createProfesseurTable(conn);
+        createBorrowingTable(conn);
         DbConnection.closeConnection();
     }
 
@@ -126,6 +127,28 @@ public class Migration {
             statement.execute(query);
             System.out.println("professeur table created successfully!");
         }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
+    public static void createBorrowingTable(Connection conn) {
+        Statement statement;
+        try {
+            String query = "CREATE TABLE borrowing ("
+                    + "id UUID PRIMARY KEY, "
+                    + "utilisateur_id UUID, "
+                    + "document_id UUID, "
+                    + "isBorrowed BOOLEAN DEFAULT FALSE, "
+                    + "isReserved BOOLEAN DEFAULT FALSE, "
+                    + "borrowed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+                    + "returnDate Date, "
+                    + "FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id), "
+                    + "FOREIGN KEY (document_id) REFERENCES documents(id))";
+
+            statement = conn.createStatement();
+            statement.executeUpdate(query);
+            System.out.println("Borrowing table created successfully!");
+        } catch (Exception e) {
             System.out.println(e);
         }
     }

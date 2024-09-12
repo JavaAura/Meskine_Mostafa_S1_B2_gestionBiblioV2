@@ -1,6 +1,10 @@
 package org.bibliotheque;
 
+import metier.Database.DbConnection;
+import metier.Database.Migration;
 import presentation.ConsoleUI;
+
+import java.sql.Connection;
 
 public class Main {
     public static void main(String[] args) {
