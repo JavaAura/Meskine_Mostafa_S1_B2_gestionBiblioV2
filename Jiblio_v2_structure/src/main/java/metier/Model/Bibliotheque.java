@@ -179,6 +179,21 @@ public class Bibliotheque {
         }
     }
 
+    public void showAllTeachers() {
+        List<Professeur> professeurs = professeurDAO.getAll();
+
+        if (professeurs.isEmpty()) {
+            System.out.println("No users found.");
+        } else {
+            for (Professeur professeur : professeurs) {
+                System.out.println("ID: " + professeur.getId());
+                System.out.println("Username: " + professeur.getUsername());
+                System.out.println("Email: " + professeur.getEmail());
+                System.out.println("-------------");
+            }
+        }
+    }
+
     public void showAllDocuments() {
         List<Livre> livres = livreDAO.getAll();
         List<Magazine> magazines = magazineDAO.getAll();
