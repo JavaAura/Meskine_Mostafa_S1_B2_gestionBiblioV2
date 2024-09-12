@@ -284,7 +284,7 @@ public class Bibliotheque {
                 etudiantDAO.delete(id);
             }
             case "professeur" -> {
-
+                professeurDAO.delete(id);
             }
         }
     }

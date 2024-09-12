@@ -1,6 +1,5 @@
 package presentation;
 
-import DAO.impl.LivreDAOImpl;
 import metier.Model.*;
 import utilitaire.DateUtils;
 import utilitaire.Validation;
@@ -615,12 +614,12 @@ public class ConsoleUI {
                         }
                     }
                     case 2 -> {
-                        biblio.showAllMagazines();
-                        System.out.print("Enter the magazine ID to delete: ");
+                        biblio.showAllTeachers();
+                        System.out.print("Enter the teacher ID to delete: ");
                         try {
                             String idString = input.nextLine();
-                            UUID magazineID = UUID.fromString(idString);
-                            this.deleteMenu("magazine", input, magazineID);
+                            UUID teacherID = UUID.fromString(idString);
+                            this.deleteUserMenu("professeur", input, teacherID);
                         } catch (IllegalArgumentException e) {
                             System.out.println("Invalid UUID format. Please enter a valid UUID.");
                         }
