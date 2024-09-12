@@ -376,6 +376,24 @@ public class ConsoleUI {
         biblio.updateUser(etudiant);
     }
 
+    public void editMenu(Professeur professeur, Scanner input) {
+        Bibliotheque biblio = new Bibliotheque();
+
+        System.out.println("(old username: " + professeur.getUsername() + ")");
+        String username = this.getStringInput(input, "new username: ");
+        professeur.setUsername(username);
+
+        System.out.println("(old email: " + professeur.getEmail() + ")");
+        String email = this.getStringInput(input, "new email: ");
+        professeur.setEmail(email);
+
+        System.out.println("(old password: " + professeur.getPassword() + ")");
+        String password = this.getStringInput(input, "new password: ");
+        professeur.setPassword(password);
+
+        biblio.updateUser(professeur);
+    }
+
     public void deleteMenu(String type, Scanner scan, UUID id) {
         System.out.println("Are u sure u want to delete this Document? (yes/no)");
         System.out.print("=>");
@@ -570,13 +588,13 @@ public class ConsoleUI {
                         }
                     }
                     case 2 -> {
-                        biblio.showAllMagazines();
+                        biblio.showAllTeachers();
                         System.out.print("Enter the teacher ID to Modify: ");
                         try {
                             String idString = input.nextLine();
-                            UUID magazineID = UUID.fromString(idString);
-                            Magazine oldMagazine = biblio.getMagazine(magazineID);
-                            this.editMenu(oldMagazine, input);
+                            UUID teacherID = UUID.fromString(idString);
+                            Professeur oldTeacher = biblio.getProfesseur(teacherID);
+                            this.editMenu(oldTeacher, input);
                         } catch (IllegalArgumentException e) {
                             System.out.println("Invalid UUID format. Please enter a valid UUID.");
                         }

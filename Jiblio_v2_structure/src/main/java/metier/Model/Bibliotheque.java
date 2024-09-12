@@ -233,6 +233,10 @@ public class Bibliotheque {
         return etudiantDAO.get(id);
     }
 
+    public Professeur getProfesseur(UUID id) {
+        return professeurDAO.get(id);
+    }
+
     public void updateDocument(Livre livre) {
         livreDAO.update(livre);
     }
@@ -251,6 +255,10 @@ public class Bibliotheque {
 
     public void updateUser(Etudiant etudiant) {
         etudiantDAO.update(etudiant);
+    }
+
+    public void updateUser(Professeur professeur) {
+        professeurDAO.update(professeur);
     }
 
     public void deleteDocument(String type, UUID id) {
