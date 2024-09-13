@@ -445,6 +445,10 @@ public class ConsoleUI {
                     biblio.showAllJournals();
                     biblio.borrow("journal", input);
                 }
+                case 4->{
+                    biblio.showAllTheses();
+                    biblio.borrow("these", input);
+                }
             }
         } else if (operation.equals("retourner")) {
             switch (docType) {

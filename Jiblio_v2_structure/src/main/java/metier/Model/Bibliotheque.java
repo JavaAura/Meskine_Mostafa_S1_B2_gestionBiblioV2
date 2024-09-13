@@ -367,6 +367,19 @@ public class Bibliotheque {
                     System.out.println("Invalid UUID format. Please enter a valid UUID.");
                 }
             }
+            case "these"->{
+                System.out.print("Enter the these ID to borrow: ");
+                try {
+                    String idString = scan.nextLine();
+                    UUID theseID = UUID.fromString(idString);
+                    theseToBorrow = getThese(theseID);
+                    if (theseToBorrow == null) {
+                        System.out.println("No these found with the provided ID.");
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Invalid UUID format. Please enter a valid UUID.");
+                }
+            }
         }
 
         if (bookToBorrow != null) {

@@ -2,6 +2,7 @@ package DAO.impl;
 
 import DAO.Intefaces.TheseDAO;
 import metier.Database.DbConnection;
+import metier.Interfaces.Empruntable;
 import metier.Model.Livre;
 import metier.Model.TheseUniversitaire;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class TheseDAOImpl implements TheseDAO {
+public class TheseDAOImpl implements TheseDAO, Empruntable {
     @Override
     public List<TheseUniversitaire> getAll() {
         List<TheseUniversitaire> theses = new ArrayList<>();
@@ -179,6 +180,48 @@ public class TheseDAOImpl implements TheseDAO {
             }
         } catch (SQLException e) {
             System.out.println(e);
+        }
+    }
+
+    @Override
+    public void emprunter(UUID id) {
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "UPDATE thesesUniversitaire SET isBorrowed = true WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setObject(1, id);
+
+            int result = ps.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("These borrowed!");
+            }
+
+            ps.close();
+            DbConnection.closeConnection();
+        } catch (SQLException e) {
+            System.out.println("Error borrowing these: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void retourner(UUID id) {
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "UPDATE thesesUniversitaire SET isBorrowed = false WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setObject(1, id);
+
+            int result = ps.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("These returned!");
+            }
+
+            ps.close();
+            DbConnection.closeConnection();
+        } catch (SQLException e) {
+            System.out.println("Error returning these: " + e.getMessage());
         }
     }
 }
