@@ -62,6 +62,7 @@ public class JournalDAOImpl implements JournalDAO, Empruntable {
                 journal.setAuteur(rs.getString("auteur"));
                 journal.setDatePublication(rs.getString("datePublication"));
                 journal.setDomaineRecherche(rs.getString("domaineRecherche"));
+                journal.setBorrowed(rs.getBoolean("isBorrowed"));
                 journal.setNombreDePages(rs.getInt("nombredepages"));
             }
 
@@ -189,11 +190,18 @@ public class JournalDAOImpl implements JournalDAO, Empruntable {
 
             int result = ps.executeUpdate();
 
-            if (result > 0) {
+            String query2 = "UPDATE documents SET isBorrowed = true WHERE id = ?";
+            PreparedStatement ps2 = conn.prepareStatement(query2);
+            ps2.setObject(1, id);
+
+            int result2 = ps2.executeUpdate();
+
+            if (result > 0 && result2 > 0) {
                 System.out.println("Journal borrowed!");
             }
 
             ps.close();
+            ps2.close();
             DbConnection.closeConnection();
         } catch (SQLException e) {
             System.out.println("Error borrowing journal: " + e.getMessage());
@@ -210,11 +218,18 @@ public class JournalDAOImpl implements JournalDAO, Empruntable {
 
             int result = ps.executeUpdate();
 
-            if (result > 0) {
+            String query2 = "UPDATE documents SET isBorrowed = false WHERE id = ?";
+            PreparedStatement ps2 = conn.prepareStatement(query2);
+            ps2.setObject(1, id);
+
+            int result2 = ps2.executeUpdate();
+
+            if (result > 0 && result2 > 0) {
                 System.out.println("Journal returned!");
             }
 
             ps.close();
+            ps2.close();
             DbConnection.closeConnection();
         } catch (SQLException e) {
             System.out.println("Error returning journal: " + e.getMessage());

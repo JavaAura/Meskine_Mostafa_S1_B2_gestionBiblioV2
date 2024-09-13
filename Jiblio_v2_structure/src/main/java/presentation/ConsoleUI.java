@@ -452,16 +452,22 @@ public class ConsoleUI {
             }
         } else if (operation.equals("retourner")) {
             switch (docType) {
-                case 1:
-                    System.out.print("donner le titre du livre a retourner: ");
-                    String livreTitre = input.nextLine();
-                    biblio.retourner(livreTitre, "livre");
-                    break;
-                case 2:
-                    System.out.print("donner le titre du magazine a retourner: ");
-                    String magTitre = input.nextLine();
-                    biblio.retourner(magTitre, "magazine");
-                    break;
+                case 1 -> {
+                    biblio.showAllBooks();
+                    biblio.retourner("livre", input);
+                }
+                case 2->{
+                    biblio.showAllMagazines();
+                    biblio.retourner("magazine", input);
+                }
+                case 3->{
+                    biblio.showAllJournals();
+                    biblio.retourner("journal", input);
+                }
+                case 4->{
+                    biblio.showAllTheses();
+                    biblio.retourner("these", input);
+                }
             }
         } else if (operation.equals("modifier")) {
             switch (docType) {

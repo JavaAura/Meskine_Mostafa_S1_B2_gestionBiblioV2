@@ -53,7 +53,30 @@ public class BorrowDAOImpl implements BorrowDAO {
 
     @Override
     public boolean delete(UUID id) {
-        return false;
+        boolean isDeleted = false;
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "DELETE FROM borrowing WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            ps.setObject(1, id);
+
+            int result = ps.executeUpdate();
+
+            if (result > 0) {
+                isDeleted = true;
+                System.out.println("document record deleted successfully!");
+            } else {
+                System.out.println("No document found with the provided ID.");
+            }
+
+            ps.close();
+            DbConnection.closeConnection();
+        } catch (SQLException e) {
+            System.out.println("Error deleting record: " + e.getMessage());
+        }
+
+        return isDeleted;
     }
 
     @Override

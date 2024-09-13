@@ -101,9 +101,10 @@ public class Bibliotheque {
 
         if ((documentToBorrow != null) && (borrower != null)) {
             borrowRecord = borrowDAO.exists(borrower.getId(), documentToBorrow.getId());
+            System.out.println(documentToBorrow.isBorrowed);
             if (borrowRecord != null && documentToBorrow.isBorrowed) {
                 if(!borrowRecord.isBorrowed()){
-                    System.out.println("this book is not borrowed by this user!");
+                    System.out.println("this document is not borrowed by this user!");
                 }else{
                     switch (docType){
                         case "livre" -> {
@@ -123,7 +124,7 @@ public class Bibliotheque {
                     borrowDAO.delete(borrowRecord.getId());
                 }
             } else {
-                System.out.println("this book is not borrowed yet!");
+                System.out.println("this document is not borrowed yet!");
             }
         }
     }

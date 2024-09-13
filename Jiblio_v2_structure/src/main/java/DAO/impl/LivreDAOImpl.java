@@ -63,6 +63,7 @@ public class LivreDAOImpl implements LivreDAO, Empruntable {
                 livre.setAuteur(rs.getString("auteur"));
                 livre.setDatePublication(rs.getString("datePublication"));
                 livre.setNombreDePages(rs.getInt("nombredepages"));
+                livre.setBorrowed(rs.getBoolean("isBorrowed"));
                 livre.setISBN(rs.getInt("isbn"));
             }
 
@@ -160,17 +161,24 @@ public class LivreDAOImpl implements LivreDAO, Empruntable {
     public void emprunter(UUID id) {
         try {
             Connection conn = DbConnection.getInstance();
-            String query = "UPDATE livres SET isBorrowed = true WHERE id = ?";
-            PreparedStatement ps = conn.prepareStatement(query);
+            String query1 = "UPDATE livres SET isBorrowed = true WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(query1);
             ps.setObject(1, id);
 
             int result = ps.executeUpdate();
 
-            if (result > 0) {
+            String query2 = "UPDATE documents SET isBorrowed = true WHERE id = ?";
+            PreparedStatement ps2 = conn.prepareStatement(query2);
+            ps2.setObject(1, id);
+
+            int result2 = ps2.executeUpdate();
+
+            if (result > 0 && result2 > 0) {
                 System.out.println("Book borrowed!");
             }
 
             ps.close();
+            ps2.close();
             DbConnection.closeConnection();
         } catch (SQLException e) {
             System.out.println("Error borrowing book: " + e.getMessage());
@@ -187,14 +195,21 @@ public class LivreDAOImpl implements LivreDAO, Empruntable {
 
             int result = ps.executeUpdate();
 
-            if (result > 0) {
+            String query2 = "UPDATE documents SET isBorrowed = false WHERE id = ?";
+            PreparedStatement ps2 = conn.prepareStatement(query2);
+            ps2.setObject(1, id);
+
+            int result2 = ps2.executeUpdate();
+
+            if (result > 0 && result2 > 0) {
                 System.out.println("Book returned!");
             }
 
             ps.close();
+            ps2.close();
             DbConnection.closeConnection();
         } catch (SQLException e) {
-            System.out.println("Error returnning book: " + e.getMessage());
+            System.out.println("Error returning book: " + e.getMessage());
         }
     }
 

@@ -63,6 +63,7 @@ public class MagazineDAOImpl implements MagazineDAO,Empruntable {
                 magazine.setAuteur(rs.getString("auteur"));
                 magazine.setDatePublication(rs.getString("datePublication"));
                 magazine.setNombreDePages(rs.getInt("nombredepages"));
+                magazine.setBorrowed(rs.getBoolean("isBorrowed"));
                 magazine.setNumero(rs.getInt("numero"));
             }
 
@@ -191,11 +192,18 @@ public class MagazineDAOImpl implements MagazineDAO,Empruntable {
 
             int result = ps.executeUpdate();
 
-            if (result > 0) {
+            String query2 = "UPDATE documents SET isBorrowed = true WHERE id = ?";
+            PreparedStatement ps2 = conn.prepareStatement(query2);
+            ps2.setObject(1, id);
+
+            int result2 = ps2.executeUpdate();
+
+            if (result > 0 && result2 > 0) {
                 System.out.println("Magazine borrowed!");
             }
 
             ps.close();
+            ps2.close();
             DbConnection.closeConnection();
         } catch (SQLException e) {
             System.out.println("Error borrowing magazine: " + e.getMessage());
@@ -212,11 +220,18 @@ public class MagazineDAOImpl implements MagazineDAO,Empruntable {
 
             int result = ps.executeUpdate();
 
-            if (result > 0) {
+            String query2 = "UPDATE documents SET isBorrowed = false WHERE id = ?";
+            PreparedStatement ps2 = conn.prepareStatement(query2);
+            ps2.setObject(1, id);
+
+            int result2 = ps2.executeUpdate();
+
+            if (result > 0 && result2 > 0) {
                 System.out.println("Magazine returned!");
             }
 
             ps.close();
+            ps2.close();
             DbConnection.closeConnection();
         } catch (SQLException e) {
             System.out.println("Error returning magazine: " + e.getMessage());

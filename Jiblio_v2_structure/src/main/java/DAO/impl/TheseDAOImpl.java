@@ -63,6 +63,7 @@ public class TheseDAOImpl implements TheseDAO, Empruntable {
                 these.setAuteur(rs.getString("auteur"));
                 these.setDatePublication(rs.getString("datePublication"));
                 these.setNombreDePages(rs.getInt("nombredepages"));
+                these.setBorrowed(rs.getBoolean("isBorrowed"));
                 these.setUniversite(rs.getString("universite"));
                 these.setDomaine(rs.getString("domaine"));
             }
@@ -192,11 +193,18 @@ public class TheseDAOImpl implements TheseDAO, Empruntable {
 
             int result = ps.executeUpdate();
 
-            if (result > 0) {
+            String query2 = "UPDATE documents SET isBorrowed = true WHERE id = ?";
+            PreparedStatement ps2 = conn.prepareStatement(query2);
+            ps2.setObject(1, id);
+
+            int result2 = ps2.executeUpdate();
+
+            if (result > 0 && result2 > 0) {
                 System.out.println("These borrowed!");
             }
 
             ps.close();
+            ps2.close();
             DbConnection.closeConnection();
         } catch (SQLException e) {
             System.out.println("Error borrowing these: " + e.getMessage());
@@ -213,11 +221,18 @@ public class TheseDAOImpl implements TheseDAO, Empruntable {
 
             int result = ps.executeUpdate();
 
-            if (result > 0) {
+            String query2 = "UPDATE documents SET isBorrowed = false WHERE id = ?";
+            PreparedStatement ps2 = conn.prepareStatement(query2);
+            ps2.setObject(1, id);
+
+            int result2 = ps2.executeUpdate();
+
+            if (result > 0 && result2 > 0) {
                 System.out.println("These returned!");
             }
 
             ps.close();
+            ps2.close();
             DbConnection.closeConnection();
         } catch (SQLException e) {
             System.out.println("Error returning these: " + e.getMessage());
