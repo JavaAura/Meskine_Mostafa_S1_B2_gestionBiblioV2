@@ -23,15 +23,17 @@ public class BorrowDAOImpl implements BorrowDAO {
 
     @Override
     public void save(Borrowed borrowed) {
-        String query = "INSERT INTO borrowing (id, utilisateur_id, document_id, returnDate) "
-                + "VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO borrowing (id, utilisateur_id, document_id, isBorrowing, isReserving, returnDate) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DbConnection.getInstance();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setObject(1, borrowed.getId());
             pstmt.setObject(2, borrowed.getUtilisateur_id());
             pstmt.setObject(3, borrowed.getDocument_id());
-            pstmt.setString(4, borrowed.getReturnDate());
+            pstmt.setBoolean(4, borrowed.isBorrowed());
+            pstmt.setBoolean(5, borrowed.isReserved());
+            pstmt.setString(6, borrowed.getReturnDate());
 
             pstmt.executeUpdate();
             System.out.println("Borrowed record saved successfully!");

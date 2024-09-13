@@ -160,7 +160,7 @@ public class LivreDAOImpl implements LivreDAO, Empruntable {
     public void emprunter(UUID id) {
         try {
             Connection conn = DbConnection.getInstance();
-            String query = "UPDATE livres SET isBorrowed = false WHERE id = ?";
+            String query = "UPDATE livres SET isBorrowed = true WHERE id = ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setObject(1, id);
 
@@ -181,20 +181,20 @@ public class LivreDAOImpl implements LivreDAO, Empruntable {
     public void retourner(UUID id) {
         try {
             Connection conn = DbConnection.getInstance();
-            String query = "UPDATE livres SET isBorrowed = true WHERE id = ?";
+            String query = "UPDATE livres SET isBorrowed = false WHERE id = ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setObject(1, id);
 
             int result = ps.executeUpdate();
 
             if (result > 0) {
-                System.out.println("Book borrowed!");
+                System.out.println("Book returned!");
             }
 
             ps.close();
             DbConnection.closeConnection();
         } catch (SQLException e) {
-            System.out.println("Error borrowing book: " + e.getMessage());
+            System.out.println("Error returnning book: " + e.getMessage());
         }
     }
 

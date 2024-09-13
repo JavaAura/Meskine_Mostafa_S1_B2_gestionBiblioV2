@@ -3,19 +3,18 @@ package metier.Model;
 import DAO.Intefaces.*;
 import DAO.impl.*;
 import presentation.ConsoleUI;
-import utilitaire.DateUtils;
 
 import java.util.*;
 import java.util.stream.Stream;
 
 public class Bibliotheque {
-    private static MagazineDAO magazineDAO = new MagazineDAOImpl();
-    private static LivreDAO livreDAO = new LivreDAOImpl();
-    private static JournalDAO journalDAO = new JournalDAOImpl();
-    private static TheseDAO theseDAO = new TheseDAOImpl();
-    private static EtudiantDAO etudiantDAO = new EtudiantDAOImpl();
-    private static ProfesseurDAO professeurDAO = new ProfesseurDAOImpl();
-    private static BorrowDAO borrowDAO = new BorrowDAOImpl();
+    private static MagazineDAOImpl magazineDAO = new MagazineDAOImpl();
+    private static LivreDAOImpl livreDAO = new LivreDAOImpl();
+    private static JournalDAOImpl journalDAO = new JournalDAOImpl();
+    private static TheseDAOImpl theseDAO = new TheseDAOImpl();
+    private static EtudiantDAOImpl etudiantDAO = new EtudiantDAOImpl();
+    private static ProfesseurDAOImpl professeurDAO = new ProfesseurDAOImpl();
+    private static BorrowDAOImpl borrowDAO = new BorrowDAOImpl();
 
     public void ajouter(Livre livre) {
         livreDAO.save(livre);
@@ -45,73 +44,29 @@ public class Bibliotheque {
 
 
     public void borrow(String docType, Scanner scan) {
-        Livre bookToBorrow = null;
-        Etudiant studentBorrower = null;
-        Professeur teacherBorrower = null;
-        System.out.print("Enter the book ID to borrow: ");
-        try {
-            String idString = scan.nextLine();
-            UUID bookID = UUID.fromString(idString);
-            bookToBorrow = getBook(bookID);
-            if (bookToBorrow == null) {
-                System.out.println("No book found with the provided ID.");
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid UUID format. Please enter a valid UUID.");
-        }
+
+        Document documentToBorrow = getDocumentToBorrow(docType, scan);
+
         System.out.print("Enter the user type (etudiant/professeur): ");
         String userType = scan.nextLine();
-        // I should wrap this section in its own function
-        switch (userType) {
-            case "etudiant" -> {
-                showAllEtudiant();
-                System.out.print("Enter the borrower ID (student ID): ");
-                try {
-                    String idString = scan.nextLine();
-                    UUID etudiantID = UUID.fromString(idString);
-                    studentBorrower = getEtudiant(etudiantID);
-                    if (studentBorrower == null) {
-                        System.out.println("No user found with the provided ID.");
-                    }
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Invalid UUID format. Please enter a valid UUID.");
-                }
-            }
-            case "professeur" ->{
-                showAllTeachers();
-                System.out.print("Enter the borrower ID (teacher ID): ");
-                try {
-                    String idString = scan.nextLine();
-                    UUID teacherID = UUID.fromString(idString);
-                    teacherBorrower = getProfesseur(teacherID);
-                    if (teacherBorrower == null) {
-                        System.out.println("No user found with the provided ID.");
-                    }
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Invalid UUID format. Please enter a valid UUID.");
-                }
-            }
-        }
-        // end section
-        if ((bookToBorrow != null) && ( (studentBorrower != null) || (teacherBorrower != null) )){
-            if (bookToBorrow.isBorrowed){
+        Utilisateur borrower = getBorrower(userType,scan);
+
+        if ((documentToBorrow != null) && ( borrower != null) ){
+            if (documentToBorrow.isBorrowed){
                 System.out.println("you can't borrow this book!");
             }else{
-                Borrowed borrowingData = new Borrowed();
+                Borrowed borrowingRecord = new Borrowed();
 
-                borrowingData.setId(UUID.randomUUID());
-                borrowingData.setDocument_id(bookToBorrow.getId());
-
+                borrowingRecord.setId(UUID.randomUUID());
+                borrowingRecord.setDocument_id(documentToBorrow.getId());
+                borrowingRecord.setUtilisateur_id(borrower.getId());
+                borrowingRecord.setBorrowed(true);
+                borrowingRecord.setReserved(false);
                 String date = ConsoleUI.getDateInput(scan, "4.return date: ");
-                borrowingData.setReturnDate(date);
+                borrowingRecord.setReturnDate(date);
 
-                if (studentBorrower != null){
-                    borrowingData.setUtilisateur_id(studentBorrower.getId());
-                }else{
-                    borrowingData.setUtilisateur_id(teacherBorrower.getId());
-                }
-
-                borrowDAO.save(borrowingData);
+                livreDAO.emprunter(documentToBorrow.getId());
+                borrowDAO.save(borrowingRecord);
             }
         }
     }
@@ -320,5 +275,80 @@ public class Bibliotheque {
 
     public void rechercher(String titre) {
 
+    }
+
+    public Utilisateur getBorrower(String userType, Scanner scan){
+        Etudiant studentBorrower = null;
+        Professeur teacherBorrower = null;
+        switch (userType) {
+            case "etudiant" -> {
+                showAllEtudiant();
+                System.out.print("Enter the borrower ID (student ID): ");
+                try {
+                    String idString = scan.nextLine();
+                    UUID etudiantID = UUID.fromString(idString);
+                    studentBorrower = getEtudiant(etudiantID);
+                    if (studentBorrower == null) {
+                        System.out.println("No user found with the provided ID.");
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Invalid UUID format. Please enter a valid UUID.");
+                }
+            }
+            case "professeur" ->{
+                showAllTeachers();
+                System.out.print("Enter the borrower ID (teacher ID): ");
+                try {
+                    String idString = scan.nextLine();
+                    UUID teacherID = UUID.fromString(idString);
+                    teacherBorrower = getProfesseur(teacherID);
+                    if (teacherBorrower == null) {
+                        System.out.println("No user found with the provided ID.");
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Invalid UUID format. Please enter a valid UUID.");
+                }
+            }
+        }
+        if (studentBorrower != null){
+            return studentBorrower;
+        }else {
+            return teacherBorrower;
+        }
+    }
+
+    public Document getDocumentToBorrow(String DocumentType, Scanner scan){
+        Livre bookToBorrow = null;
+        Magazine magazineToBorrow = null;
+        JournalScientifique journalToBorrow = null;
+        TheseUniversitaire theseToBorrow = null;
+        switch (DocumentType){
+            case "livre"->{
+                System.out.print("Enter the book ID to borrow: ");
+                try {
+                    String idString = scan.nextLine();
+                    UUID bookID = UUID.fromString(idString);
+                    bookToBorrow = getBook(bookID);
+                    if (bookToBorrow == null) {
+                        System.out.println("No book found with the provided ID.");
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Invalid UUID format. Please enter a valid UUID.");
+                }
+            }
+            case "magazine"->{
+
+            }
+        }
+
+        if (bookToBorrow != null){
+            return bookToBorrow;
+        }else if (magazineToBorrow != null){
+            return magazineToBorrow;
+        }else if (journalToBorrow != null){
+            return journalToBorrow;
+        }else {
+            return theseToBorrow;
+        }
     }
 }
