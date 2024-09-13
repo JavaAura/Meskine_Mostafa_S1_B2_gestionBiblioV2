@@ -3,6 +3,7 @@ package DAO.impl;
 import DAO.Intefaces.JournalDAO;
 import metier.Database.DbConnection;
 import metier.Model.JournalScientifique;
+import metier.Model.Livre;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -152,5 +153,29 @@ public class JournalDAOImpl implements JournalDAO {
         }
 
         return isDeleted;
+    }
+
+    @Override
+    public void insertToDocuments(JournalScientifique journal) {
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "INSERT INTO documents (id, titre, auteur, datePublication, nombredepages) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setObject(1, journal.getId());
+            ps.setString(2, journal.getTitre());
+            ps.setString(3, journal.getAuteur());
+            ps.setString(4, journal.getDatePublication());
+            ps.setInt(5, journal.getNombreDePages());
+
+            int result = ps.executeUpdate();
+            ps.close();
+            DbConnection.closeConnection();
+
+            if (result != 0) {
+                System.out.println("!");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 }

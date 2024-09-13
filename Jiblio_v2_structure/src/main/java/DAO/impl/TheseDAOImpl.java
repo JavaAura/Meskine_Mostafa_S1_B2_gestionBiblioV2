@@ -2,6 +2,7 @@ package DAO.impl;
 
 import DAO.Intefaces.TheseDAO;
 import metier.Database.DbConnection;
+import metier.Model.Livre;
 import metier.Model.TheseUniversitaire;
 
 import java.sql.Connection;
@@ -155,5 +156,29 @@ public class TheseDAOImpl implements TheseDAO {
         }
 
         return isDeleted;
+    }
+
+    @Override
+    public void insertToDocuments(TheseUniversitaire these) {
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "INSERT INTO documents (id, titre, auteur, datePublication, nombredepages) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setObject(1, these.getId());
+            ps.setString(2, these.getTitre());
+            ps.setString(3, these.getAuteur());
+            ps.setString(4, these.getDatePublication());
+            ps.setInt(5, these.getNombreDePages());
+
+            int result = ps.executeUpdate();
+            ps.close();
+            DbConnection.closeConnection();
+
+            if (result != 0) {
+                System.out.println("!");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 }

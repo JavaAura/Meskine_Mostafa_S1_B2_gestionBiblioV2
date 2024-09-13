@@ -17,7 +17,6 @@ public class DbConnection {
                 String password = "mesmos2001";
 
                 connection = DriverManager.getConnection(url, user, password);
-                System.out.println("Database connected!");
             } catch (SQLException e) {
                 System.out.println("Error connecting to the database: " + e.getMessage());
             }
@@ -30,7 +29,6 @@ public class DbConnection {
             try {
                 connection.close();
                 connection = null;
-                System.out.println("Database connection closed.");
             } catch (SQLException e) {
                 System.out.println("Error closing the database connection: " + e.getMessage());
             }

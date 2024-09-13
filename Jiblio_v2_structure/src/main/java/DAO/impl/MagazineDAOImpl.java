@@ -2,6 +2,7 @@ package DAO.impl;
 
 import DAO.Intefaces.MagazineDAO;
 import metier.Database.DbConnection;
+import metier.Model.Livre;
 import metier.Model.Magazine;
 
 import java.sql.Connection;
@@ -154,6 +155,30 @@ public class MagazineDAOImpl implements MagazineDAO {
         }
 
         return isDeleted;
+    }
+
+    @Override
+    public void insertToDocuments(Magazine magazine) {
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "INSERT INTO documents (id, titre, auteur, datePublication, nombredepages) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setObject(1, magazine.getId());
+            ps.setString(2, magazine.getTitre());
+            ps.setString(3, magazine.getAuteur());
+            ps.setString(4, magazine.getDatePublication());
+            ps.setInt(5, magazine.getNombreDePages());
+
+            int result = ps.executeUpdate();
+            ps.close();
+            DbConnection.closeConnection();
+
+            if (result != 0) {
+                System.out.println("!");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 
 }

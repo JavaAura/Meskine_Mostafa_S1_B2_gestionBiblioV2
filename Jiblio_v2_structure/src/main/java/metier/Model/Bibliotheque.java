@@ -1,20 +1,22 @@
 package metier.Model;
 
-import DAO.Intefaces.*;
 import DAO.impl.*;
+import metier.Enum.Role;
 import presentation.ConsoleUI;
 
 import java.util.*;
 import java.util.stream.Stream;
 
 public class Bibliotheque {
-    private static MagazineDAOImpl magazineDAO = new MagazineDAOImpl();
-    private static LivreDAOImpl livreDAO = new LivreDAOImpl();
-    private static JournalDAOImpl journalDAO = new JournalDAOImpl();
-    private static TheseDAOImpl theseDAO = new TheseDAOImpl();
-    private static EtudiantDAOImpl etudiantDAO = new EtudiantDAOImpl();
-    private static ProfesseurDAOImpl professeurDAO = new ProfesseurDAOImpl();
-    private static BorrowDAOImpl borrowDAO = new BorrowDAOImpl();
+    private static final MagazineDAOImpl magazineDAO = new MagazineDAOImpl();
+    private static final LivreDAOImpl livreDAO = new LivreDAOImpl();
+    private static final JournalDAOImpl journalDAO = new JournalDAOImpl();
+    private static final TheseDAOImpl theseDAO = new TheseDAOImpl();
+    private static final EtudiantDAOImpl etudiantDAO = new EtudiantDAOImpl();
+    private static final ProfesseurDAOImpl professeurDAO = new ProfesseurDAOImpl();
+    private static final BorrowDAOImpl borrowDAO = new BorrowDAOImpl();
+    private static Role etudiant = Role.etudiant;
+    private static Role professeur = Role.professeur;
 
     public void ajouter(Livre livre) {
         livreDAO.save(livre);
@@ -23,14 +25,17 @@ public class Bibliotheque {
 
     public void ajouter(Magazine magazine) {
         magazineDAO.save(magazine);
+        magazineDAO.insertToDocuments(magazine);
     }
 
     public void ajouter(JournalScientifique journal) {
         journalDAO.save(journal);
+        journalDAO.insertToDocuments(journal);
     }
 
     public void ajouter(TheseUniversitaire these) {
         theseDAO.save(these);
+        theseDAO.insertToDocuments(these);
     }
 
     public void ajouter(Etudiant etudiant) {
@@ -40,21 +45,21 @@ public class Bibliotheque {
 
     public void ajouter(Professeur professeur) {
         professeurDAO.save(professeur);
+        professeurDAO.insertToUser(professeur);
     }
 
 
     public void borrow(String docType, Scanner scan) {
-
         Document documentToBorrow = getDocumentToBorrow(docType, scan);
 
         System.out.print("Enter the user type (etudiant/professeur): ");
         String userType = scan.nextLine();
-        Utilisateur borrower = getBorrower(userType,scan);
+        Utilisateur borrower = getBorrower(userType, scan);
 
-        if ((documentToBorrow != null) && ( borrower != null) ){
-            if (documentToBorrow.isBorrowed){
+        if ((documentToBorrow != null) && (borrower != null)) {
+            if (documentToBorrow.isBorrowed) {
                 System.out.println("you can't borrow this book!");
-            }else{
+            } else {
                 Borrowed borrowingRecord = new Borrowed();
 
                 borrowingRecord.setId(UUID.randomUUID());
@@ -277,7 +282,7 @@ public class Bibliotheque {
 
     }
 
-    public Utilisateur getBorrower(String userType, Scanner scan){
+    public Utilisateur getBorrower(String userType, Scanner scan) {
         Etudiant studentBorrower = null;
         Professeur teacherBorrower = null;
         switch (userType) {
@@ -295,7 +300,7 @@ public class Bibliotheque {
                     System.out.println("Invalid UUID format. Please enter a valid UUID.");
                 }
             }
-            case "professeur" ->{
+            case "professeur" -> {
                 showAllTeachers();
                 System.out.print("Enter the borrower ID (teacher ID): ");
                 try {
@@ -310,20 +315,20 @@ public class Bibliotheque {
                 }
             }
         }
-        if (studentBorrower != null){
+        if (studentBorrower != null) {
             return studentBorrower;
-        }else {
+        } else {
             return teacherBorrower;
         }
     }
 
-    public Document getDocumentToBorrow(String DocumentType, Scanner scan){
+    public Document getDocumentToBorrow(String DocumentType, Scanner scan) {
         Livre bookToBorrow = null;
         Magazine magazineToBorrow = null;
         JournalScientifique journalToBorrow = null;
         TheseUniversitaire theseToBorrow = null;
-        switch (DocumentType){
-            case "livre"->{
+        switch (DocumentType) {
+            case "livre" -> {
                 System.out.print("Enter the book ID to borrow: ");
                 try {
                     String idString = scan.nextLine();
@@ -336,18 +341,18 @@ public class Bibliotheque {
                     System.out.println("Invalid UUID format. Please enter a valid UUID.");
                 }
             }
-            case "magazine"->{
+            case "magazine" -> {
 
             }
         }
 
-        if (bookToBorrow != null){
+        if (bookToBorrow != null) {
             return bookToBorrow;
-        }else if (magazineToBorrow != null){
+        } else if (magazineToBorrow != null) {
             return magazineToBorrow;
-        }else if (journalToBorrow != null){
+        } else if (journalToBorrow != null) {
             return journalToBorrow;
-        }else {
+        } else {
             return theseToBorrow;
         }
     }

@@ -2,6 +2,7 @@ package DAO.impl;
 
 import DAO.Intefaces.ProfesseurDAO;
 import metier.Database.DbConnection;
+import metier.Model.Etudiant;
 import metier.Model.Professeur;
 
 import java.sql.Connection;
@@ -148,5 +149,28 @@ public class ProfesseurDAOImpl implements ProfesseurDAO {
         }
 
         return isDeleted;
+    }
+
+    @Override
+    public void insertToUser(Professeur professeur) {
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "INSERT INTO utilisateurs (id, username, email, password) VALUES (?, ?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setObject(1, professeur.getId());
+            ps.setString(2, professeur.getUsername());
+            ps.setString(3, professeur.getEmail());
+            ps.setString(4, professeur.getPassword());
+
+            int result = ps.executeUpdate();
+            ps.close();
+            DbConnection.closeConnection();
+
+            if (result != 0) {
+                System.out.println("!");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 }
