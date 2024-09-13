@@ -438,9 +438,12 @@ public class ConsoleUI {
                     biblio.borrow("livre", input);
                 }
                 case 2->{
-//                    System.out.print("donner le titre du magazine a emprunter: ");
-//                    String magTitre = input.nextLine();
-//                    biblio.emprunter(magTitre, "magazine");
+                    biblio.showAllMagazines();
+                    biblio.borrow("magazine", input);
+                }
+                case 3->{
+                    biblio.showAllJournals();
+                    biblio.borrow("journal", input);
                 }
             }
         } else if (operation.equals("retourner")) {

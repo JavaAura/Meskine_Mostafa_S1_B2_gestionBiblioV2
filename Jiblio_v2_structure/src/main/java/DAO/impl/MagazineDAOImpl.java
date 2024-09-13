@@ -205,6 +205,22 @@ public class MagazineDAOImpl implements MagazineDAO,Empruntable {
 
     @Override
     public void retourner(UUID id) {
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "UPDATE magazines SET isBorrowed = false WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setObject(1, id);
 
+            int result = ps.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("Magazine returned!");
+            }
+
+            ps.close();
+            DbConnection.closeConnection();
+        } catch (SQLException e) {
+            System.out.println("Error returning magazine: " + e.getMessage());
+        }
     }
 }

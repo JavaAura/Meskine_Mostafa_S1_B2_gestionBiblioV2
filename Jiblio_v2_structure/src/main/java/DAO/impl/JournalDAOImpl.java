@@ -2,6 +2,7 @@ package DAO.impl;
 
 import DAO.Intefaces.JournalDAO;
 import metier.Database.DbConnection;
+import metier.Interfaces.Empruntable;
 import metier.Model.JournalScientifique;
 import metier.Model.Livre;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class JournalDAOImpl implements JournalDAO {
+public class JournalDAOImpl implements JournalDAO, Empruntable {
     @Override
     public List<JournalScientifique> getAll() {
         List<JournalScientifique> journals = new ArrayList<>();
@@ -176,6 +177,48 @@ public class JournalDAOImpl implements JournalDAO {
             }
         } catch (SQLException e) {
             System.out.println(e);
+        }
+    }
+
+    @Override
+    public void emprunter(UUID id) {
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "UPDATE journalScientifiques SET isBorrowed = true WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setObject(1, id);
+
+            int result = ps.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("Journal borrowed!");
+            }
+
+            ps.close();
+            DbConnection.closeConnection();
+        } catch (SQLException e) {
+            System.out.println("Error borrowing journal: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void retourner(UUID id) {
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "UPDATE journalScientifiques SET isBorrowed = false WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setObject(1, id);
+
+            int result = ps.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("Journal returned!");
+            }
+
+            ps.close();
+            DbConnection.closeConnection();
+        } catch (SQLException e) {
+            System.out.println("Error returning journal: " + e.getMessage());
         }
     }
 }

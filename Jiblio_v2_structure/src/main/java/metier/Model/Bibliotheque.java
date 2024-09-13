@@ -354,6 +354,19 @@ public class Bibliotheque {
                     System.out.println("Invalid UUID format. Please enter a valid UUID.");
                 }
             }
+            case "journal"->{
+                System.out.print("Enter the journal ID to borrow: ");
+                try {
+                    String idString = scan.nextLine();
+                    UUID journalID = UUID.fromString(idString);
+                    journalToBorrow = getJournal(journalID);
+                    if (journalToBorrow == null) {
+                        System.out.println("No journal found with the provided ID.");
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Invalid UUID format. Please enter a valid UUID.");
+                }
+            }
         }
 
         if (bookToBorrow != null) {
