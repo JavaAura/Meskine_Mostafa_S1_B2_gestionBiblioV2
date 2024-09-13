@@ -4,7 +4,6 @@ import DAO.Intefaces.JournalDAO;
 import metier.Database.DbConnection;
 import metier.Interfaces.Empruntable;
 import metier.Model.JournalScientifique;
-import metier.Model.Livre;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -3,9 +3,12 @@ package DAO.impl;
 import DAO.Intefaces.BorrowDAO;
 import metier.Database.DbConnection;
 import metier.Model.Borrowed;
+import metier.Model.Livre;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,8 +57,35 @@ public class BorrowDAOImpl implements BorrowDAO {
     }
 
     @Override
-    public boolean exists() {
-        return false;
+    public Borrowed exists(UUID utilisateurID, UUID documentID) {
+        Borrowed borrow = null;
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "SELECT * FROM borrowing WHERE utilisateur_id = ? AND document_id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setObject(1, utilisateurID);
+            ps.setObject(2, documentID);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                borrow = new Borrowed();
+                borrow.setId((UUID) rs.getObject("id"));
+                borrow.setUtilisateur_id((UUID) rs.getObject("utilisateur_id"));
+                borrow.setDocument_id((UUID) rs.getObject("document_id"));
+                borrow.setBorrowed(rs.getBoolean("isBorrowing"));
+                borrow.setReserved(rs.getBoolean("isReserving"));
+                borrow.setReturnDate(rs.getString("returnDate"));
+            }
+
+            rs.close();
+            ps.close();
+            DbConnection.closeConnection();
+        } catch (SQLException e) {
+            System.out.println("Error retrieving book: " + e.getMessage());
+        }
+
+        return borrow;
     }
 
 }

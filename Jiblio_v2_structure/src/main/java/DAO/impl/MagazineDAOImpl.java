@@ -3,7 +3,6 @@ package DAO.impl;
 import DAO.Intefaces.MagazineDAO;
 import metier.Database.DbConnection;
 import metier.Interfaces.Empruntable;
-import metier.Model.Livre;
 import metier.Model.Magazine;
 
 import java.sql.Connection;
