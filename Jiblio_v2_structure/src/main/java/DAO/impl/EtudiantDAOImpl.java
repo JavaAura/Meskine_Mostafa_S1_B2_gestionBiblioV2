@@ -89,7 +89,7 @@ public class EtudiantDAOImpl implements EtudiantDAO {
             DbConnection.closeConnection();
 
             if (result != 0) {
-                System.out.println("etudiant ajouté avec succès !");
+                System.out.print("etudiant ajouté avec succès !");
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -148,5 +148,28 @@ public class EtudiantDAOImpl implements EtudiantDAO {
         }
 
         return isDeleted;
+    }
+
+    @Override
+    public void insertToUser(Etudiant etudiant) {
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "INSERT INTO utilisateurs (id, username, email, password) VALUES (?, ?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setObject(1, etudiant.getId());
+            ps.setString(2, etudiant.getUsername());
+            ps.setString(3, etudiant.getEmail());
+            ps.setString(4, etudiant.getPassword());
+
+            int result = ps.executeUpdate();
+            ps.close();
+            DbConnection.closeConnection();
+
+            if (result != 0) {
+                System.out.println("!");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 }

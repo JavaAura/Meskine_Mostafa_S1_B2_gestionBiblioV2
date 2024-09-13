@@ -434,7 +434,7 @@ public class ConsoleUI {
         } else if (operation.equals("emprunter")) {
             switch (docType) {
                 case 1 -> {
-                    biblio.showAllDocuments();
+                    biblio.showAllBooks();
                     biblio.borrow("livre", input);
                 }
                 case 2->{

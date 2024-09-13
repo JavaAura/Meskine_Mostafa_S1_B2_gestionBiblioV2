@@ -94,7 +94,7 @@ public class LivreDAOImpl implements LivreDAO, Empruntable {
             DbConnection.closeConnection();
 
             if (result != 0) {
-                System.out.println("livre ajouté avec succès !");
+                System.out.print("livre ajouté avec succès !");
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -195,6 +195,30 @@ public class LivreDAOImpl implements LivreDAO, Empruntable {
             DbConnection.closeConnection();
         } catch (SQLException e) {
             System.out.println("Error borrowing book: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void insertToDocuments(Livre livre) {
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "INSERT INTO documents (id, titre, auteur, datePublication, nombredepages) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setObject(1, livre.getId());
+            ps.setString(2, livre.getTitre());
+            ps.setString(3, livre.getAuteur());
+            ps.setString(4, livre.getDatePublication());
+            ps.setInt(5, livre.getNombreDePages());
+
+            int result = ps.executeUpdate();
+            ps.close();
+            DbConnection.closeConnection();
+
+            if (result != 0) {
+                System.out.println("!");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
         }
     }
 }

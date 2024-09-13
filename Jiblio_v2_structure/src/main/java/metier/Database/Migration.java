@@ -141,7 +141,7 @@ public class Migration {
                     + "isBorrowing BOOLEAN DEFAULT FALSE, "
                     + "isReserving BOOLEAN DEFAULT FALSE, "
                     + "borrowed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
-                    + "returnDate Date, "
+                    + "returnDate VARCHAR(250), "
                     + "FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id), "
                     + "FOREIGN KEY (document_id) REFERENCES documents(id))";
 

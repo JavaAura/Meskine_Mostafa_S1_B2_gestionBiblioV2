@@ -19,6 +19,7 @@ public class Bibliotheque {
 
     public void ajouter(Livre livre) {
         livreDAO.save(livre);
+        livreDAO.insertToDocuments(livre);
     }
 
     public void ajouter(Magazine magazine) {
@@ -35,6 +36,7 @@ public class Bibliotheque {
 
     public void ajouter(Etudiant etudiant) {
         etudiantDAO.save(etudiant);
+        etudiantDAO.insertToUser(etudiant);
     }
 
     public void ajouter(Professeur professeur) {
@@ -46,7 +48,6 @@ public class Bibliotheque {
         Livre bookToBorrow = null;
         Etudiant studentBorrower = null;
         Professeur teacherBorrower = null;
-        showAllBooks();
         System.out.print("Enter the book ID to borrow: ");
         try {
             String idString = scan.nextLine();
@@ -60,6 +61,7 @@ public class Bibliotheque {
         }
         System.out.print("Enter the user type (etudiant/professeur): ");
         String userType = scan.nextLine();
+        // I should wrap this section in its own function
         switch (userType) {
             case "etudiant" -> {
                 showAllEtudiant();
@@ -90,6 +92,7 @@ public class Bibliotheque {
                 }
             }
         }
+        // end section
         if ((bookToBorrow != null) && ( (studentBorrower != null) || (teacherBorrower != null) )){
             if (bookToBorrow.isBorrowed){
                 System.out.println("you can't borrow this book!");
