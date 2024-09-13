@@ -2,6 +2,7 @@ package DAO.impl;
 
 import DAO.Intefaces.MagazineDAO;
 import metier.Database.DbConnection;
+import metier.Interfaces.Empruntable;
 import metier.Model.Livre;
 import metier.Model.Magazine;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class MagazineDAOImpl implements MagazineDAO {
+public class MagazineDAOImpl implements MagazineDAO,Empruntable {
 
     @Override
     public List<Magazine> getAll() {
@@ -181,4 +182,29 @@ public class MagazineDAOImpl implements MagazineDAO {
         }
     }
 
+    @Override
+    public void emprunter(UUID id) {
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "UPDATE magazines SET isBorrowed = true WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setObject(1, id);
+
+            int result = ps.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("Magazine borrowed!");
+            }
+
+            ps.close();
+            DbConnection.closeConnection();
+        } catch (SQLException e) {
+            System.out.println("Error borrowing magazine: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void retourner(UUID id) {
+
+    }
 }

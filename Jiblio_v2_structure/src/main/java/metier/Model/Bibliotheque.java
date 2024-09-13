@@ -342,7 +342,17 @@ public class Bibliotheque {
                 }
             }
             case "magazine" -> {
-
+                System.out.print("Enter the magazine ID to borrow: ");
+                try {
+                    String idString = scan.nextLine();
+                    UUID magazineID = UUID.fromString(idString);
+                    magazineToBorrow = getMagazine(magazineID);
+                    if (magazineToBorrow == null) {
+                        System.out.println("No magazine found with the provided ID.");
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Invalid UUID format. Please enter a valid UUID.");
+                }
             }
         }
 
