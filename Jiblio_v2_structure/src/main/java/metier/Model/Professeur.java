@@ -3,6 +3,14 @@ package metier.Model;
 public class Professeur extends Utilisateur {
     private String modele_enseigne;
 
+    @Override
+    void afficherDetails() {
+        System.out.println("ID: " + getId());
+        System.out.println("Nom d'utilisateur: " + getUsername());
+        System.out.println("Email: " + getEmail());
+        System.out.println("-------------");
+    }
+
     public Professeur() {
     }
 

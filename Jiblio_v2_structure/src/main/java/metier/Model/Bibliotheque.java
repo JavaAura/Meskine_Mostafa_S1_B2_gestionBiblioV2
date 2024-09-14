@@ -185,99 +185,82 @@ public class Bibliotheque {
     }
 
     public void showAllBooks() {
-
         if (livres.isEmpty()) {
-            System.out.println("No books found.");
+            System.out.println("Aucun livre trouvé.");
         } else {
+            int counter = 1;
             for (Livre livre : livres) {
-                System.out.println("ID: " + livre.getId());
-                System.out.println("Title: " + livre.getTitre());
-                System.out.println("Author: " + livre.getAuteur());
-                System.out.println("Publication Date: " + livre.getDatePublication());
-                System.out.println("Number of Pages: " + livre.getNombreDePages());
-                System.out.println("ISBN: " + livre.getISBN());
-                System.out.println("-------------");
+                System.out.println("Livre " + counter + ":");
+                livre.afficherDetails();
+                counter++;
             }
         }
     }
 
     public void showAllMagazines() {
-
         if (magazines.isEmpty()) {
-            System.out.println("No Magazines found.");
+            System.out.println("Aucun magazine trouvé.");
         } else {
+            int counter = 1;
             for (Magazine magazine : magazines) {
-                System.out.println("ID: " + magazine.getId());
-                System.out.println("Title: " + magazine.getTitre());
-                System.out.println("Author: " + magazine.getAuteur());
-                System.out.println("Publication Date: " + magazine.getDatePublication());
-                System.out.println("Number of Pages: " + magazine.getNombreDePages());
-                System.out.println("Numero: " + magazine.getNumero());
-                System.out.println("-------------");
+                System.out.println("Magazine " + counter + ":");
+                magazine.afficherDetails();
+                counter++;
             }
         }
+
     }
 
     public void showAllJournals() {
-
         if (journals.isEmpty()) {
-            System.out.println("No Journals found.");
+            System.out.println("Aucun journal trouvé.");
         } else {
+            int counter = 1;
             for (JournalScientifique journal : journals) {
-                System.out.println("ID: " + journal.getId());
-                System.out.println("Title: " + journal.getTitre());
-                System.out.println("Author: " + journal.getAuteur());
-                System.out.println("Publication Date: " + journal.getDatePublication());
-                System.out.println("Number of Pages: " + journal.getNombreDePages());
-                System.out.println("Domaine de recherche: " + journal.getDomaineRecherche());
+                System.out.println("Journal " + counter + ":");
+                journal.afficherDetails();
                 System.out.println("-------------");
+                counter++;
             }
         }
+
     }
 
     public void showAllTheses() {
-
         if (theses.isEmpty()) {
-            System.out.println("No Theses found.");
+            System.out.println("Aucune thèse trouvée.");
         } else {
+            int counter = 1;
             for (TheseUniversitaire these : theses) {
-                System.out.println("ID: " + these.getId());
-                System.out.println("Title: " + these.getTitre());
-                System.out.println("Author: " + these.getAuteur());
-                System.out.println("Publication Date: " + these.getDatePublication());
-                System.out.println("Number of Pages: " + these.getNombreDePages());
-                System.out.println("Domaine: " + these.getDomaine());
-                System.out.println("Universite: " + these.getUniversite());
-                System.out.println("-------------");
+                System.out.println("Thèse " + counter + ":");
+                these.afficherDetails();
+                counter++;
             }
         }
     }
 
     public void showAllEtudiant() {
-
-
         if (etudiants.isEmpty()) {
-            System.out.println("No users found.");
+            System.out.println("Aucun utilisateur trouvé.");
         } else {
+            int counter = 1;
             for (Etudiant etudiant : etudiants) {
-                System.out.println("ID: " + etudiant.getId());
-                System.out.println("Username: " + etudiant.getUsername());
-                System.out.println("Email: " + etudiant.getEmail());
-                System.out.println("-------------");
+                System.out.println("Étudiant " + counter + ":");
+                etudiant.afficherDetails();
+                counter++;
             }
         }
     }
 
     public void showAllTeachers() {
-
         if (professeurs.isEmpty()) {
-            System.out.println("No users found.");
+            System.out.println("Aucun utilisateur trouvé.");
         } else {
+            int counter = 1;
             for (Professeur professeur : professeurs) {
-                System.out.println("ID: " + professeur.getId());
-                System.out.println("Username: " + professeur.getUsername());
-                System.out.println("Email: " + professeur.getEmail());
-                System.out.println("-------------");
+                System.out.println("Professeur " + counter + ":");
+                professeur.afficherDetails();
+                counter++;
             }
         }
     }

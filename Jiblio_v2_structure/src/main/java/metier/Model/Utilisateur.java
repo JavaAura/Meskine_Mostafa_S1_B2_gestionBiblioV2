@@ -8,6 +8,8 @@ abstract class Utilisateur {
     protected String email;
     protected String password;
 
+    abstract void afficherDetails();
+
     protected Utilisateur() {
     }
 
