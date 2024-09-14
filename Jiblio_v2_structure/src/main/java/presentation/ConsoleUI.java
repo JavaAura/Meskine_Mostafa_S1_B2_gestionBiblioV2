@@ -48,6 +48,11 @@ public class ConsoleUI {
                     int reserverType = input.nextInt();
                     this.documentType(reserverType, "reserver");
                 }
+                case 10 -> {
+                    this.typeMenu("Annuler reservation pour");
+                    int reserverType = input.nextInt();
+                    this.documentType(reserverType, "annuler reservation");
+                }
                 case 7 -> {
                     System.out.print("donner le titre du document a rechercher: ");
                     input.nextLine();
@@ -92,6 +97,7 @@ public class ConsoleUI {
         System.out.println("7.Rechercher un document");
         System.out.println("8.Gere les utilisateurs");
         System.out.println("9.Reserver un document");
+        System.out.println("10.Annuler reservation d'un document");
         System.out.println("0.Quitter");
         System.out.print("=> ");
     }
@@ -573,7 +579,7 @@ public class ConsoleUI {
                     }
                 }
             }
-        } else {
+        } else if (operation.equals("reserver")) {
             switch (docType) {
                 case 1 -> {
                     biblio.showAllBooks();
@@ -590,6 +596,25 @@ public class ConsoleUI {
                 case 4 -> {
                     biblio.showAllTheses();
                     biblio.reserver("these", input);
+                }
+            }
+        } else {
+            switch (docType) {
+                case 1 -> {
+                    biblio.showAllBooks();
+                    biblio.annulerReservation("livre", input);
+                }
+                case 2 -> {
+                    biblio.showAllMagazines();
+                    biblio.annulerReservation("magazine", input);
+                }
+                case 3 -> {
+                    biblio.showAllJournals();
+                    biblio.annulerReservation("journal", input);
+                }
+                case 4 -> {
+                    biblio.showAllTheses();
+                    biblio.annulerReservation("these", input);
                 }
             }
         }

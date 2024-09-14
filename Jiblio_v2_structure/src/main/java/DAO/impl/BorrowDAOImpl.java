@@ -154,7 +154,7 @@ public class BorrowDAOImpl implements BorrowDAO, Reservable {
             ps.close();
             DbConnection.closeConnection();
         } catch (SQLException e) {
-            System.out.println("Error deleting record: " + e.getMessage());
+            System.out.println("Error cancelling reservation: " + e.getMessage());
         }
     }
 }

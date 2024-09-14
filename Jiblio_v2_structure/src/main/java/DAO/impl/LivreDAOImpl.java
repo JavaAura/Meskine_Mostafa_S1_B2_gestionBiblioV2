@@ -3,7 +3,6 @@ package DAO.impl;
 import DAO.Intefaces.LivreDAO;
 import metier.Database.DbConnection;
 import metier.Interfaces.Empruntable;
-import metier.Interfaces.Reservable;
 import metier.Model.Livre;
 
 import java.sql.Connection;

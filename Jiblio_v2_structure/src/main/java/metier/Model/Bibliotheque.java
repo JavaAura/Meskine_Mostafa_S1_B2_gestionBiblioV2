@@ -161,6 +161,25 @@ public class Bibliotheque {
         }
     }
 
+    public void annulerReservation(String docType, Scanner scan) {
+        Borrowed borrowRecord = null;
+
+        Document documentToReserve = getDocument(docType, scan, "return");
+
+        System.out.print("Enter the user type (etudiant/professeur): ");
+        String userType = scan.nextLine();
+        Utilisateur borrower = getBorrower(userType, scan);
+
+        if ((documentToReserve != null) && (borrower != null)) {
+            borrowRecord = borrowDAO.exists(borrower.getId(), documentToReserve.getId());
+            if (borrowRecord != null && borrowRecord.isReserved()) {
+                borrowDAO.annulerReservation(borrowRecord.getId());
+            }else {
+                System.out.println("no reservation record found!!");
+            }
+        }
+    }
+
     public void showAllBooks() {
         List<Livre> livres = livreDAO.getAll();
 
