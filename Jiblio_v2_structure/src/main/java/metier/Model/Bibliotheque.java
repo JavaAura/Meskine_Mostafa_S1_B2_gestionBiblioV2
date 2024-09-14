@@ -70,7 +70,7 @@ public class Bibliotheque {
                 String date = ConsoleUI.getDateInput(scan, "4.return date: ");
                 borrowingRecord.setReturnDate(date);
 
-                switch (docType){
+                switch (docType) {
                     case "livre" -> {
                         livreDAO.emprunter(documentToBorrow.getId());
                     }
@@ -101,12 +101,11 @@ public class Bibliotheque {
 
         if ((documentToBorrow != null) && (borrower != null)) {
             borrowRecord = borrowDAO.exists(borrower.getId(), documentToBorrow.getId());
-            System.out.println(documentToBorrow.isBorrowed);
             if (borrowRecord != null && documentToBorrow.isBorrowed) {
-                if(!borrowRecord.isBorrowed()){
+                if (!borrowRecord.isBorrowed()) {
                     System.out.println("this document is not borrowed by this user!");
-                }else{
-                    switch (docType){
+                } else {
+                    switch (docType) {
                         case "livre" -> {
                             livreDAO.retourner(documentToBorrow.getId());
                         }
@@ -125,6 +124,39 @@ public class Bibliotheque {
                 }
             } else {
                 System.out.println("this document is not borrowed yet!");
+            }
+        }
+    }
+
+    public void reserver(String docType, Scanner scan) {
+        Borrowed borrowRecord = null;
+
+        Document documentToReserve = getDocument(docType, scan, "return");
+
+        System.out.print("Enter the user type (etudiant/professeur): ");
+        String userType = scan.nextLine();
+        Utilisateur borrower = getBorrower(userType, scan);
+
+        if ((documentToReserve != null) && (borrower != null)) {
+            borrowRecord = borrowDAO.exists(borrower.getId(), documentToReserve.getId());
+            if (borrowRecord == null && documentToReserve.isBorrowed) {
+
+                borrowRecord = new Borrowed();
+
+                borrowRecord.setId(UUID.randomUUID());
+                borrowRecord.setDocument_id(documentToReserve.getId());
+                borrowRecord.setUtilisateur_id(borrower.getId());
+                borrowRecord.setBorrowed(false);
+                borrowRecord.setReserved(true);
+
+                borrowDAO.reserver(borrowRecord);
+
+            } else if (borrowRecord != null && borrowRecord.isReserved()) {
+                System.out.println("you already reserved this document!");
+            } else if (borrowRecord != null && borrowRecord.isBorrowed()) {
+                System.out.println("this document is borrowed by this user already, you can't reserve it!");
+            } else {
+                System.out.println("this document is not borrowed, try borrowing it directly!");
             }
         }
     }

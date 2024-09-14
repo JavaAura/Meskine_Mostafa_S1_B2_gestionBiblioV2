@@ -43,6 +43,11 @@ public class ConsoleUI {
                 case 6 -> {
                     biblio.showAllDocuments();
                 }
+                case 9 -> {
+                    this.typeMenu("Reserver");
+                    int reserverType = input.nextInt();
+                    this.documentType(reserverType, "reserver");
+                }
                 case 7 -> {
                     System.out.print("donner le titre du document a rechercher: ");
                     input.nextLine();
@@ -86,6 +91,7 @@ public class ConsoleUI {
         System.out.println("6.Afficher tous les documents");
         System.out.println("7.Rechercher un document");
         System.out.println("8.Gere les utilisateurs");
+        System.out.println("9.Reserver un document");
         System.out.println("0.Quitter");
         System.out.print("=> ");
     }
@@ -128,7 +134,7 @@ public class ConsoleUI {
                 String auteur = this.getStringInput(input, "3.nom de l'auteur: ");
                 livre.setAuteur(auteur);
 
-                String date = this.getDateInput(input, "4.date de publication: ");
+                String date = getDateInput(input, "4.date de publication: ");
                 livre.setDatePublication(date);
 
                 int nombreDePages = this.getIntInput(input, "5.nombre de pages: ");
@@ -150,7 +156,7 @@ public class ConsoleUI {
                 String auteur = this.getStringInput(input, "3.nom de l'auteur: ");
                 magazine.setAuteur(auteur);
 
-                String date = this.getDateInput(input, "4.date de publication: ");
+                String date = getDateInput(input, "4.date de publication: ");
                 magazine.setDatePublication(date);
 
                 int nombreDePages = this.getIntInput(input, "5.nombre de pages: ");
@@ -172,7 +178,7 @@ public class ConsoleUI {
                 String domaineRecherche = this.getStringInput(input, "3.domaine de recherche: ");
                 journal.setDomaineRecherche(domaineRecherche);
 
-                String date = this.getDateInput(input, "4.date de publication: ");
+                String date = getDateInput(input, "4.date de publication: ");
                 journal.setDatePublication(date);
 
                 int nombreDePages = this.getIntInput(input, "5.nombre de pages: ");
@@ -197,7 +203,7 @@ public class ConsoleUI {
                 String universite = this.getStringInput(input, "4.universite: ");
                 these.setUniversite(universite);
 
-                String date = this.getDateInput(input, "5.date de publication: ");
+                String date = getDateInput(input, "5.date de publication: ");
                 these.setDatePublication(date);
 
                 int nombreDePages = this.getIntInput(input, "6.nombre de pages: ");
@@ -265,7 +271,7 @@ public class ConsoleUI {
         livre.setAuteur(auteur);
 
         System.out.println("(old publish date: " + livre.getDatePublication() + ")");
-        String date = this.getDateInput(input, "4.new publish date: ");
+        String date = getDateInput(input, "4.new publish date: ");
         livre.setDatePublication(date);
 
         System.out.println("(old number of pages: " + livre.getNombreDePages() + ")");
@@ -291,7 +297,7 @@ public class ConsoleUI {
         magazine.setAuteur(auteur);
 
         System.out.println("(old publish date: " + magazine.getDatePublication() + ")");
-        String date = this.getDateInput(input, "4.new publish date: ");
+        String date = getDateInput(input, "4.new publish date: ");
         magazine.setDatePublication(date);
 
         System.out.println("(old number of pages: " + magazine.getNombreDePages() + ")");
@@ -317,7 +323,7 @@ public class ConsoleUI {
         journal.setAuteur(auteur);
 
         System.out.println("(old publish date: " + journal.getDatePublication() + ")");
-        String date = this.getDateInput(input, "4.new publish date: ");
+        String date = getDateInput(input, "4.new publish date: ");
         journal.setDatePublication(date);
 
         System.out.println("(old number of pages: " + journal.getNombreDePages() + ")");
@@ -331,23 +337,23 @@ public class ConsoleUI {
         Bibliotheque biblio = new Bibliotheque();
 
         System.out.println("(old these title: " + these.getTitre() + ")");
-        String titre = this.getStringInput(input, "new these title: ");
+        String titre = getStringInput(input, "new these title: ");
         these.setTitre(titre);
 
         System.out.println("(old domain: " + these.getDomaine() + ")");
-        String domaine = this.getStringInput(input, "new domain: ");
+        String domaine = getStringInput(input, "new domain: ");
         these.setDomaine(domaine);
 
         System.out.println("(old university: " + these.getUniversite() + ")");
-        String universite = this.getStringInput(input, "new university: ");
+        String universite = getStringInput(input, "new university: ");
         these.setUniversite(universite);
 
         System.out.println("(old author name: " + these.getAuteur() + ")");
-        String auteur = this.getStringInput(input, "new author name: ");
+        String auteur = getStringInput(input, "new author name: ");
         these.setAuteur(auteur);
 
         System.out.println("(old publish date: " + these.getDatePublication() + ")");
-        String date = this.getDateInput(input, "4.new publish date: ");
+        String date = getDateInput(input, "4.new publish date: ");
         these.setDatePublication(date);
 
         System.out.println("(old number of pages: " + these.getNombreDePages() + ")");
@@ -437,15 +443,15 @@ public class ConsoleUI {
                     biblio.showAllBooks();
                     biblio.borrow("livre", input);
                 }
-                case 2->{
+                case 2 -> {
                     biblio.showAllMagazines();
                     biblio.borrow("magazine", input);
                 }
-                case 3->{
+                case 3 -> {
                     biblio.showAllJournals();
                     biblio.borrow("journal", input);
                 }
-                case 4->{
+                case 4 -> {
                     biblio.showAllTheses();
                     biblio.borrow("these", input);
                 }
@@ -456,15 +462,15 @@ public class ConsoleUI {
                     biblio.showAllBooks();
                     biblio.retourner("livre", input);
                 }
-                case 2->{
+                case 2 -> {
                     biblio.showAllMagazines();
                     biblio.retourner("magazine", input);
                 }
-                case 3->{
+                case 3 -> {
                     biblio.showAllJournals();
                     biblio.retourner("journal", input);
                 }
-                case 4->{
+                case 4 -> {
                     biblio.showAllTheses();
                     biblio.retourner("these", input);
                 }
@@ -565,6 +571,25 @@ public class ConsoleUI {
                     } catch (IllegalArgumentException e) {
                         System.out.println("Invalid UUID format. Please enter a valid UUID.");
                     }
+                }
+            }
+        } else {
+            switch (docType) {
+                case 1 -> {
+                    biblio.showAllBooks();
+                    biblio.reserver("livre", input);
+                }
+                case 2 -> {
+                    biblio.showAllMagazines();
+                    biblio.reserver("magazine", input);
+                }
+                case 3 -> {
+                    biblio.showAllJournals();
+                    biblio.reserver("journal", input);
+                }
+                case 4 -> {
+                    biblio.showAllTheses();
+                    biblio.reserver("these", input);
                 }
             }
         }

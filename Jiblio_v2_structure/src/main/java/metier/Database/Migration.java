@@ -140,8 +140,8 @@ public class Migration {
                     + "document_id UUID, "
                     + "isBorrowing BOOLEAN DEFAULT FALSE, "
                     + "isReserving BOOLEAN DEFAULT FALSE, "
-                    + "borrowed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
-                    + "returnDate VARCHAR(250), "
+                    + "borrowed_reserved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+                    + "returnDate VARCHAR(250) DEFAULT NULL, "
                     + "FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id), "
                     + "FOREIGN KEY (document_id) REFERENCES documents(id))";
 

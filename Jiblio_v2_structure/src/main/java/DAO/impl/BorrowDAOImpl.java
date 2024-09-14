@@ -2,8 +2,8 @@ package DAO.impl;
 
 import DAO.Intefaces.BorrowDAO;
 import metier.Database.DbConnection;
+import metier.Interfaces.Reservable;
 import metier.Model.Borrowed;
-import metier.Model.Livre;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-public class BorrowDAOImpl implements BorrowDAO {
+public class BorrowDAOImpl implements BorrowDAO, Reservable {
 
     @Override
     public List<Borrowed> getAll() {
@@ -111,4 +111,50 @@ public class BorrowDAOImpl implements BorrowDAO {
         return borrow;
     }
 
+    // reservable methods for borrowed documents only
+
+    @Override
+    public void reserver(Borrowed borrowed) {
+        String query = "INSERT INTO borrowing (id, utilisateur_id, document_id, isBorrowing, isReserving) "
+                + "VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = DbConnection.getInstance();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setObject(1, borrowed.getId());
+            pstmt.setObject(2, borrowed.getUtilisateur_id());
+            pstmt.setObject(3, borrowed.getDocument_id());
+            pstmt.setBoolean(4, borrowed.isBorrowed());
+            pstmt.setBoolean(5, borrowed.isReserved());
+
+            pstmt.executeUpdate();
+            System.out.println("Document Reserved saved successfully!");
+
+        } catch (Exception e) {
+            System.out.println("Error saving borrowed record: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void annulerReservation(UUID id) {
+        try {
+            Connection conn = DbConnection.getInstance();
+            String query = "DELETE FROM borrowing WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            ps.setObject(1, id);
+
+            int result = ps.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("reservation cancelled!");
+            } else {
+                System.out.println("No document found with the provided ID.");
+            }
+
+            ps.close();
+            DbConnection.closeConnection();
+        } catch (SQLException e) {
+            System.out.println("Error deleting record: " + e.getMessage());
+        }
+    }
 }
