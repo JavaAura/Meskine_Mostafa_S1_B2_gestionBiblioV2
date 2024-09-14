@@ -364,7 +364,15 @@ public class Bibliotheque {
     }
 
     public void rechercher(String titre) {
+        List<Document> filteredDocuments = getCombinedStream()
+                .filter(document -> document.getTitre().toLowerCase().contains(titre.toLowerCase()))
+                .toList();
 
+        if (filteredDocuments.isEmpty()) {
+            System.out.println("No document found with the name: " + titre);
+        } else {
+            filteredDocuments.forEach(System.out::println);
+        }
     }
 
     public Utilisateur getBorrower(String userType, Scanner scan) {
