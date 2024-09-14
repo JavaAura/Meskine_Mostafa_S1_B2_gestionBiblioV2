@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Jiblio_v2_structure:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Jiblio_v2_structure_jar</output-path>
+    <root id="archive" name="Jiblio_v2_structure.jar">
+      <element id="module-output" name="Jiblio_v2_structure" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/checkerframework/checker-qual/3.42.0/checker-qual-3.42.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
