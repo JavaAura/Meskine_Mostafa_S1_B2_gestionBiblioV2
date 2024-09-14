@@ -15,8 +15,12 @@ public class Bibliotheque {
     private static final EtudiantDAOImpl etudiantDAO = new EtudiantDAOImpl();
     private static final ProfesseurDAOImpl professeurDAO = new ProfesseurDAOImpl();
     private static final BorrowDAOImpl borrowDAO = new BorrowDAOImpl();
-    private static Role etudiant = Role.etudiant;
-    private static Role professeur = Role.professeur;
+    private static final List<Livre> livres = livreDAO.getAll();
+    private static final List<Magazine> magazines = magazineDAO.getAll();
+    private static final List<JournalScientifique> journals = journalDAO.getAll();
+    private static final List<TheseUniversitaire> theses = theseDAO.getAll();
+    private static final List<Etudiant> etudiants = etudiantDAO.getAll();
+    private static final List<Professeur> professeurs = professeurDAO.getAll();
 
     public void ajouter(Livre livre) {
         livreDAO.save(livre);
@@ -181,7 +185,6 @@ public class Bibliotheque {
     }
 
     public void showAllBooks() {
-        List<Livre> livres = livreDAO.getAll();
 
         if (livres.isEmpty()) {
             System.out.println("No books found.");
@@ -199,7 +202,6 @@ public class Bibliotheque {
     }
 
     public void showAllMagazines() {
-        List<Magazine> magazines = magazineDAO.getAll();
 
         if (magazines.isEmpty()) {
             System.out.println("No Magazines found.");
@@ -217,7 +219,6 @@ public class Bibliotheque {
     }
 
     public void showAllJournals() {
-        List<JournalScientifique> journals = journalDAO.getAll();
 
         if (journals.isEmpty()) {
             System.out.println("No Journals found.");
@@ -235,7 +236,6 @@ public class Bibliotheque {
     }
 
     public void showAllTheses() {
-        List<TheseUniversitaire> theses = theseDAO.getAll();
 
         if (theses.isEmpty()) {
             System.out.println("No Theses found.");
@@ -254,7 +254,7 @@ public class Bibliotheque {
     }
 
     public void showAllEtudiant() {
-        List<Etudiant> etudiants = etudiantDAO.getAll();
+
 
         if (etudiants.isEmpty()) {
             System.out.println("No users found.");
@@ -269,7 +269,6 @@ public class Bibliotheque {
     }
 
     public void showAllTeachers() {
-        List<Professeur> professeurs = professeurDAO.getAll();
 
         if (professeurs.isEmpty()) {
             System.out.println("No users found.");
@@ -284,21 +283,7 @@ public class Bibliotheque {
     }
 
     public void showAllDocuments() {
-        List<Livre> livres = livreDAO.getAll();
-        List<Magazine> magazines = magazineDAO.getAll();
-        List<JournalScientifique> journals = journalDAO.getAll();
-        List<TheseUniversitaire> theses = theseDAO.getAll();
-
-        Stream<? extends Document> stream1 = livres.stream();
-        Stream<? extends Document> stream2 = magazines.stream();
-        Stream<? extends Document> stream3 = journals.stream();
-        Stream<? extends Document> stream4 = theses.stream();
-
-        Stream<Document> combinedStream = Stream.concat(
-                Stream.concat(stream1, stream2),
-                Stream.concat(stream3, stream4)
-        );
-
+        Stream<Document> combinedStream = getCombinedStream();
         combinedStream.forEach(System.out::println);
     }
 
@@ -491,5 +476,17 @@ public class Bibliotheque {
         } else {
             return these;
         }
+    }
+
+    public Stream<Document> getCombinedStream(){
+        Stream<? extends Document> stream1 = livres.stream();
+        Stream<? extends Document> stream2 = magazines.stream();
+        Stream<? extends Document> stream3 = journals.stream();
+        Stream<? extends Document> stream4 = theses.stream();
+
+        return Stream.concat(
+                Stream.concat(stream1, stream2),
+                Stream.concat(stream3, stream4)
+        );
     }
 }
